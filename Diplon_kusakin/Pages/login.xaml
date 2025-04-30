@@ -15,8 +15,8 @@
         <Grid Background="Black" Opacity="0.8"/>
 
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-            <Label Content="Авторизация" FontSize="40" BorderBrush="Gray" BorderThickness="0,0,0,1.2"  Margin="20,0,21,11" Height="65" VerticalAlignment="Bottom"/>
-            <Label Content="Логин" FontSize="18"/>
+            <Label Content="Авторизация" FontSize="40" BorderBrush="White"   Margin="20,0,21,11" Height="65" VerticalAlignment="Bottom" Foreground="White"/>
+            <Label Content="Логин" FontSize="18" Foreground="White"/>
             <TextBox x:Name="Login" Height="31" Width="284"  FontSize="16">
                 <TextBox.Resources>
                     <Style TargetType="{x:Type Border}">
@@ -24,7 +24,7 @@
                     </Style>
                 </TextBox.Resources>
             </TextBox>
-            <Label Content="Пароль" FontSize="18" />
+            <Label Content="Пароль" FontSize="18" Foreground="White" />
             <PasswordBox x:Name="Password" Height="32" Width="285"  FontSize="16" />
 
             <TextBox x:Name="pasVisible" Height="32" Text="{Binding Password, ElementName=pas}" Visibility="Collapsed" BorderThickness="0,0,0,1.5" FontSize="16">
@@ -34,7 +34,7 @@
                     </Style>
                 </TextBox.Resources>
             </TextBox>
-            <CheckBox x:Name="showPasswordCheckBox" Content="Показать пароль" VerticalAlignment="Top" Margin="0,5,0,0" Checked="showPasswordCheckBox_Checked" Unchecked="showPasswordCheckBox_Unchecked"/>
+            <CheckBox x:Name="showPasswordCheckBox" Content="Показать пароль" VerticalAlignment="Top" Margin="0,5,0,0" Checked="showPasswordCheckBox_Checked" Unchecked="showPasswordCheckBox_Unchecked" Foreground="White"/>
 
             <Button Name="butlog" Content="Вход" Width="160" Height="30" Click="butlog_Click_1" Background="#e71615" Foreground="White" FontWeight="Bold" FontSize="14" BorderThickness="0" Margin="0,20,0,0">
                 <Button.Resources>
@@ -44,7 +44,7 @@
                 </Button.Resources>
 
             </Button>
-            <Button FontSize="15" Margin="10,10,10,0" Command="{Binding ClickCommand}" Click="Button_Click " BorderBrush="#FFD11A1A" Background="#FFA71616" Foreground="#FFF31616">
+            <Button FontSize="15" Margin="10,10,10,0" Command="{Binding ClickCommand}" Click="Button_Click " Background="White">
                 <Button.Template>
                     <ControlTemplate TargetType="{x:Type Button}">
                         <TextBlock Text="У вас нет аккаунта?" TextAlignment="Center" Foreground="Gray"/>
