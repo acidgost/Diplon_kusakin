@@ -110,6 +110,9 @@
     <Compile Include="Pages\main.xaml.cs">
       <DependentUpon>main.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\reg.xaml.cs">
+      <DependentUpon>reg.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Request.cs" />
     <Compile Include="Users.cs" />
     <Page Include="MainWindow.xaml">
@@ -130,6 +133,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\main.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\reg.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
