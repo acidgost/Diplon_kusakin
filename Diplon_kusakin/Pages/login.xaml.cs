@@ -64,7 +64,7 @@ namespace Diplon_kusakin.Pages
                     }
                     else if (role == "isp")
                     {
-                        mainWindow.OpenPages(new Pages.ispolnitel(mainWindow, user));
+                        //mainWindow.OpenPages(new Pages.ispolnitel(mainWindow, user));
 
                         MessageBox.Show("Успешный вход!");
 

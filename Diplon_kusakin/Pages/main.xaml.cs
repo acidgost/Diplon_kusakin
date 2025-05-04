@@ -104,8 +104,8 @@ namespace Diplon_kusakin.Pages
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            AddRequest addRequestPage = new AddRequest(mainWindow, currentUser);
-            mainWindow.OpenPages(addRequestPage);
+            //AddRequest addRequestPage = new AddRequest(mainWindow, currentUser);
+            //mainWindow.OpenPages(addRequestPage);
         }
 
         private void btnEdit_Click(object sender, RoutedEventArgs e)
@@ -122,8 +122,8 @@ namespace Diplon_kusakin.Pages
                 return;
             }
 
-            UpdateRequest updateRequestPage = new UpdateRequest(selectedRequest, mainWindow, currentUser);
-            mainWindow.OpenPages(updateRequestPage);
+            //UpdateRequest updateRequestPage = new UpdateRequest(selectedRequest, mainWindow, currentUser);
+            //mainWindow.OpenPages(updateRequestPage);
         }
 
         private void SearchButton_Click(object sender, RoutedEventArgs e)

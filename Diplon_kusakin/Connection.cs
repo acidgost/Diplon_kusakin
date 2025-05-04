@@ -8,7 +8,7 @@ using MySql.Data.MySqlClient;
 
 namespace Diplon_kusakin
 {
-    internal class Connection
+    public class Connection
     {
         public static MySqlDataReader SqlConnection(string query, List<MySqlParameter> parameters = null)
         {

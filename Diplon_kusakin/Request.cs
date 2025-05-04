@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Diplon_kusakin
 {
-    internal class Request
+    public class Request
     {
         public int Id { get; set; }
         public string Registration_Date { get; set; }
