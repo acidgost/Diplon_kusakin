@@ -128,6 +128,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Pages\AddIsp.xaml.cs">
+      <DependentUpon>AddIsp.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\ispolnitel.xaml.cs">
       <DependentUpon>ispolnitel.xaml</DependentUpon>
     </Compile>
@@ -155,6 +158,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Pages\AddIsp.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\ispolnitel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
