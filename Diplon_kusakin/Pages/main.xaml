@@ -69,7 +69,7 @@
                             <GridViewColumn Header="Заявка" DisplayMemberBinding="{Binding Id }" Width="auto"/>
                             <GridViewColumn Header="Дата добавления" DisplayMemberBinding="{Binding Registration_Date}" Width="auto"/>
                             <GridViewColumn Header="Оборудование" DisplayMemberBinding="{Binding Equipment}" Width="auto"/>
-                            <GridViewColumn Header="Кабинет" DisplayMemberBinding="{Binding Kabinet}" Width="auto"/>
+                            <GridViewColumn Header="Код Ошибки" DisplayMemberBinding="{Binding Kabinet}" Width="80"/>
                             <GridViewColumn Header="Тип неисправности" DisplayMemberBinding="{Binding Equipment_Type	}" Width="auto"/>
                             <GridViewColumn Header="Описание проблемы" DisplayMemberBinding="{Binding ProblemDescription}" Width="auto"/>
 
@@ -80,7 +80,7 @@
             </ScrollViewer>
 
         </Grid>
-        <Grid VerticalAlignment="Top" Background="#008080" Height="50" Margin="0,400,0,0">
+        <Grid Background="#008080" Height="50" VerticalAlignment="Bottom">
             <Button Padding="30,0" Content="Добавить заявку" FontSize="16" Background="White" Foreground="Black" FontWeight="Bold" BorderThickness="1" Margin="0,10,10,10" Click="Button_Click" HorizontalAlignment="Right" Width="145">
                 <Button.Style>
                     <Style TargetType="Button">
