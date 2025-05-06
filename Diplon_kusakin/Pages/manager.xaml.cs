@@ -1,6 +1,11 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using MySql.Data.MySqlClient;
+using PdfSharp.Drawing;
+using PdfSharp.Pdf;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,8 +18,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Microsoft.Win32;
-using MySql.Data.MySqlClient;
 
 namespace Diplon_kusakin.Pages
 {
@@ -221,41 +224,41 @@ namespace Diplon_kusakin.Pages
             var dialog = new OpenFileDialog();
             if (dialog.ShowDialog() == true)
             {
-                //Microsoft.Office.Interop.Excel.Application ObjExcel = null;
-                //try
-                //{
+                Microsoft.Office.Interop.Excel.Application ObjExcel = null;
+                try
+                {
 
-                //    string path = dialog.FileName;
-                //    ObjExcel = new Microsoft.Office.Interop.Excel.Application();
-                //    //Открываем книгу.                                                                                                                                                        
-                //    Microsoft.Office.Interop.Excel.Workbook ObjWorkBook = ObjExcel.Workbooks.Open(path, 0, false, 5, "", "", false, Microsoft.Office.Interop.Excel.XlPlatform.xlWindows, "", true, false, 0, true, false, false);
-                //    Microsoft.Office.Interop.Excel.Worksheet sheet = (Microsoft.Office.Interop.Excel.Worksheet)ObjWorkBook.Sheets[1];
+                    string path = dialog.FileName;
+                    ObjExcel = new Microsoft.Office.Interop.Excel.Application();
+                    //Открываем книгу.                                                                                                                                                        
+                    Microsoft.Office.Interop.Excel.Workbook ObjWorkBook = ObjExcel.Workbooks.Open(path, 0, false, 5, "", "", false, Microsoft.Office.Interop.Excel.XlPlatform.xlWindows, "", true, false, 0, true, false, false);
+                    Microsoft.Office.Interop.Excel.Worksheet sheet = (Microsoft.Office.Interop.Excel.Worksheet)ObjWorkBook.Sheets[1];
 
-                //    for (int i = 2; i <= sheet.UsedRange.Rows.Count; i++)
-                //    {
-                //        string name = sheet.Cells[i, 1].Value;
-                //        string login = Convert.ToString(sheet.Cells[i, 2].Value);
-                //        string password = Convert.ToString(sheet.Cells[i, 3].Value);
-                //        string email = Convert.ToString(sheet.Cells[i, 4].Value);
-                //        string role = sheet.Cells[i, 5].Value;
+                    for (int i = 2; i <= sheet.UsedRange.Rows.Count; i++)
+                    {
+                        string name = sheet.Cells[i, 1].Value;
+                        string login = Convert.ToString(sheet.Cells[i, 2].Value);
+                        string password = Convert.ToString(sheet.Cells[i, 3].Value);
+                        string email = Convert.ToString(sheet.Cells[i, 4].Value);
+                        string role = sheet.Cells[i, 5].Value;
 
-                //        string query = $"INSERT INTO `dip`.`Users`\n(\n`Full_Name`,\n`Position`,\n`Contact_Information`,\n`Username`,\n`Password`)\nVALUES\n('{name}',\n'{role}',\n'{email}',\n'{login}',\n'{password}');";
-                //        MySqlDataReader reader = Connection.SqlConnection(query);
-                //        reader.Close();
-                //    }
-                //    ObjExcel.Quit();
-                //    MessageBox.Show("Сохранено");
-                //}
-                //catch
-                //{
-                //    MessageBox.Show("ошибка");
-                //    if (ObjExcel != null)
-                //    {
-                //        ObjExcel.Quit();
-                //    }
+                        string query = $"INSERT INTO `dip`.`Users`\n(\n`Full_Name`,\n`Position`,\n`Contact_Information`,\n`Username`,\n`Password`)\nVALUES\n('{name}',\n'{role}',\n'{email}',\n'{login}',\n'{password}');";
+                        MySqlDataReader reader = Connection.SqlConnection(query);
+                        reader.Close();
+                    }
+                    ObjExcel.Quit();
+                    MessageBox.Show("Сохранено");
+                }
+                catch
+                {
+                    MessageBox.Show("ошибка");
+                    if (ObjExcel != null)
+                    {
+                        ObjExcel.Quit();
+                    }
 
 
-                //}
+                }
             }
         }
     }
