@@ -227,7 +227,6 @@ namespace Diplon_kusakin.Pages
                 Microsoft.Office.Interop.Excel.Application ObjExcel = null;
                 try
                 {
-
                     string path = dialog.FileName;
                     ObjExcel = new Microsoft.Office.Interop.Excel.Application();
                     //Открываем книгу.                                                                                                                                                        
