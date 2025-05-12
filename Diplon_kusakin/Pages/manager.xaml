@@ -16,6 +16,8 @@
 
     <Grid Background="AliceBlue">
 
+
+
         <Grid VerticalAlignment="Top" Height="50" Background="#008080">
             <Label Content="Администратор" FontSize="24" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0" FontWeight="Bold" x:Name="name" Foreground="White"/>
             <Button Content="Выход"  Width="100" Height="30" Background="White" Foreground="Black" FontWeight="Bold" FontSize="14" BorderThickness="0" HorizontalAlignment="Right" Click="Exit" Margin="10">
@@ -68,101 +70,7 @@
 
         </Grid>
 
-        <StackPanel Width="79" HorizontalAlignment="Left" Margin="0,50,0,0" Background="#008080">
-            <Button Content="Пользователи" Height="30" Background="#008080" Foreground="Black" FontWeight="Bold" Margin="0 10" FontSize="10" BorderThickness="0" VerticalAlignment="Top" Click="User_Click">
-                <Button.Style>
-                    <Style TargetType="Button">
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="Button">
-                                    <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="15">
-                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                    </Border>
-                                    <ControlTemplate.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter TargetName="border" Property="Background" Value="White"/>
-                                        </Trigger>
-                                        <Trigger Property="IsMouseOver" Value="False">
-                                            <Setter TargetName="border" Property="Background" Value="White"/>
-                                        </Trigger>
-                                    </ControlTemplate.Triggers>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </Button.Style>
-            </Button>
-            <Button Content="Команда" Height="30" Background="Tomato" Foreground="Black" FontWeight="Bold" Margin="0 10" FontSize="10" BorderThickness="0" VerticalAlignment="Top" Click="Sotrud_Click">
-                <Button.Style>
-                    <Style TargetType="Button">
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="Button">
-                                    <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="15">
-                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                    </Border>
-                                    <ControlTemplate.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter TargetName="border" Property="Background" Value="White"/>
-                                        </Trigger>
-                                        <Trigger Property="IsMouseOver" Value="False">
-                                            <Setter TargetName="border" Property="Background" Value="White"/>
-                                        </Trigger>
-                                    </ControlTemplate.Triggers>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </Button.Style>
-            </Button>
-            <Button  Content="Коментарии" Height="30" Background="Tomato" Foreground="Black" Margin="0 10" FontWeight="Bold" FontSize="10" BorderThickness="0" VerticalAlignment="Top" Click="btnComment_Click">
-                <Button.Style>
-                    <Style TargetType="Button">
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="Button">
-                                    <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="15">
-                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                    </Border>
-                                    <ControlTemplate.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter TargetName="border" Property="Background" Value="White"/>
-                                        </Trigger>
-                                        <Trigger Property="IsMouseOver" Value="False">
-                                            <Setter TargetName="border" Property="Background" Value="White"/>
-                                        </Trigger>
-                                    </ControlTemplate.Triggers>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </Button.Style>
-            </Button>
-            <Button Content="Импорт" Height="30" Background="Tomato" Foreground="Black" Margin="0 10" FontWeight="Bold" FontSize="10" BorderThickness="0" VerticalAlignment="Top" Click="Button_Click">
-                <Button.Style>
-                    <Style TargetType="{x:Type Button}">
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="{x:Type Button}">
-                                    <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="15">
-                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                    </Border>
-                                    <ControlTemplate.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter TargetName="border" Property="Background" Value="White"/>
-                                        </Trigger>
-                                        <Trigger Property="IsMouseOver" Value="False">
-                                            <Setter TargetName="border" Property="Background" Value="White"/>
-                                        </Trigger>
-                                    </ControlTemplate.Triggers>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </Button.Style>
-            </Button>
 
-        </StackPanel>
 
         <Grid Margin="79,50,0,-40">
             <ScrollViewer Margin="0,0,0,42"  >
@@ -207,6 +115,24 @@
                 </ListView>
             </ScrollViewer>
 
+        </Grid>
+
+        <Grid Background="#008080" HorizontalAlignment="Left" Width="79" Margin="0,50,0,10">
+            <!-- Бургер и меню -->
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0">
+                <!-- Кнопка-бургер -->
+                <ToggleButton x:Name="BurgerButton" Width="40" Height="40" Background="Teal" BorderThickness="0">
+                    <Path Data="M0,5 L30,5 M0,15 L30,15 M0,25 L30,25" Stroke="White" StrokeThickness="3"/>
+                </ToggleButton>
+
+                <!-- Меню, появляется при IsChecked=true -->
+                <StackPanel x:Name="MenuPanel" Visibility="Collapsed" Margin="0,10,0,0">
+                    <Button Content="Пользователи" Height="30" Width="60" Background="#008080" Foreground="Black" FontWeight="Bold" FontSize="10" BorderThickness="0" Click="User_Click"/>
+                    <Button Content="Команда" Height="30" Width="60" Background="Tomato" Foreground="Black" FontWeight="Bold" FontSize="10" BorderThickness="0" Click="Sotrud_Click" Margin="0 5"/>
+                    <Button Content="Комментарии" Height="30" Width="60" Background="Tomato" Foreground="Black" FontWeight="Bold" FontSize="10" BorderThickness="0" Click="btnComment_Click" Margin="0 5"/>
+                    <Button Content="Импорт" Height="30" Width="60" Background="Tomato" Foreground="Black" FontWeight="Bold" FontSize="10" BorderThickness="0" Click="Button_Click" Margin="0 5"/>
+                </StackPanel>
+            </StackPanel>
         </Grid>
     </Grid>
 </Page>

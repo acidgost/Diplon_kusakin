@@ -35,12 +35,17 @@ namespace Diplon_kusakin.Pages
         Request request1;
         public manager(MainWindow mainWindow_, Users currentUser)
         {
+            
             mainWindow = mainWindow_;
             InitializeComponent();
             LoadUserRequests();
             originalRequests = userRequests;
-
+            BurgerButton.Checked += (s, e) => MenuPanel.Visibility = Visibility.Visible;
+            BurgerButton.Unchecked += (s, e) => MenuPanel.Visibility = Visibility.Collapsed;
         }
+
+
+
         public void LoadUserRequests()
         {
 
@@ -115,8 +120,8 @@ namespace Diplon_kusakin.Pages
                 return;
             }
 
-            //UpdateRequestManager updateRequestPage = new UpdateRequestManager(selectedRequest, mainWindow);
-            //mainWindow.OpenPages(updateRequestPage);
+            UpdateRequestManager updateRequestPage = new UpdateRequestManager(selectedRequest, mainWindow);
+            mainWindow.OpenPages(updateRequestPage);
         }
         private void SearchButton_Click(object sender, RoutedEventArgs e)
         {
@@ -172,22 +177,22 @@ namespace Diplon_kusakin.Pages
                 return;
             }
 
-            //mainWindow.OpenPages(new Pages.CommentMeneger(mainWindow, selectedRequest));
+            mainWindow.OpenPages(new Pages.CommentMeneger(mainWindow, selectedRequest));
         }
 
         private void Addisp_Click(object sender, RoutedEventArgs e)
         {
-            //mainWindow.OpenPages(new Pages.AddIsp(mainWindow));
+            mainWindow.OpenPages(new Pages.AddIsp(mainWindow));
         }
 
         private void User_Click(object sender, RoutedEventArgs e)
         {
-            //mainWindow.OpenPages(new Pages.User(mainWindow, users));
+            mainWindow.OpenPages(new Pages.User(mainWindow, users));
         }
 
         private void Sotrud_Click(object sender, RoutedEventArgs e)
         {
-            //mainWindow.OpenPages(new Pages.Sotrudniki(mainWindow));
+            mainWindow.OpenPages(new Pages.Sotrudniki(mainWindow));
         }
 
         private void Koment_Click(object sender, RoutedEventArgs e)
@@ -219,45 +224,49 @@ namespace Diplon_kusakin.Pages
             }
         }
 
+        
+
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             var dialog = new OpenFileDialog();
             if (dialog.ShowDialog() == true)
             {
-                //Microsoft.Office.Interop.Excel.Application ObjExcel = null;
-                //try
-                //{
-                //    string path = dialog.FileName;
-                //    ObjExcel = new Microsoft.Office.Interop.Excel.Application();
-                //    //Открываем книгу.                                                                                                                                                        
-                //    Microsoft.Office.Interop.Excel.Workbook ObjWorkBook = ObjExcel.Workbooks.Open(path, 0, false, 5, "", "", false, Microsoft.Office.Interop.Excel.XlPlatform.xlWindows, "", true, false, 0, true, false, false);
-                //    Microsoft.Office.Interop.Excel.Worksheet sheet = (Microsoft.Office.Interop.Excel.Worksheet)ObjWorkBook.Sheets[1];
+                Microsoft.Office.Interop.Excel.Application ObjExcel = null;
+                try
+                {
 
-                //    for (int i = 2; i <= sheet.UsedRange.Rows.Count; i++)
-                //    {
-                //        string name = sheet.Cells[i, 1].Value;
-                //        string login = Convert.ToString(sheet.Cells[i, 2].Value);
-                //        string password = Convert.ToString(sheet.Cells[i, 3].Value);
-                //        string email = Convert.ToString(sheet.Cells[i, 4].Value);
-                //        string role = sheet.Cells[i, 5].Value;
+                    string path = dialog.FileName;
+                    ObjExcel = new Microsoft.Office.Interop.Excel.Application();
+                    //Открываем книгу.                                                                                                                                                        
+                    Microsoft.Office.Interop.Excel.Workbook ObjWorkBook = ObjExcel.Workbooks.Open(path, 0, false, 5, "", "", false, Microsoft.Office.Interop.Excel.XlPlatform.xlWindows, "", true, false, 0, true, false, false);
+                    Microsoft.Office.Interop.Excel.Worksheet sheet = (Microsoft.Office.Interop.Excel.Worksheet)ObjWorkBook.Sheets[1];
 
-                //        string query = $"INSERT INTO `dip`.`Users`\n(\n`Full_Name`,\n`Position`,\n`Contact_Information`,\n`Username`,\n`Password`)\nVALUES\n('{name}',\n'{role}',\n'{email}',\n'{login}',\n'{password}');";
-                //        MySqlDataReader reader = Connection.SqlConnection(query);
-                //        reader.Close();
-                //    }
-                //    ObjExcel.Quit();
-                //    MessageBox.Show("Сохранено");
-                //}
-                //catch
-                //{
-                //    MessageBox.Show("ошибка");
-                //    if (ObjExcel != null)
-                //    {
-                //        ObjExcel.Quit();
-                //    }
+                    for (int i = 2; i <= sheet.UsedRange.Rows.Count; i++)
+                    {
+                        string name = sheet.Cells[i, 1].Value;
+                        string login = Convert.ToString(sheet.Cells[i, 2].Value);
+                        string password = Convert.ToString(sheet.Cells[i, 3].Value);
+                        string email = Convert.ToString(sheet.Cells[i, 4].Value);
+                        string role = sheet.Cells[i, 5].Value;
+
+                        string query = $"INSERT INTO `dip`.`Users`\n(\n`Full_Name`,\n`Position`,\n`Contact_Information`,\n`Username`,\n`Password`)\nVALUES\n('{name}',\n'{role}',\n'{email}',\n'{login}',\n'{password}');";
+                        MySqlDataReader reader = Connection.SqlConnection(query);
+                        reader.Close();
+                    }
+                    ObjExcel.Quit();
+                    MessageBox.Show("Сохранено");
+                }
+                catch
+                {
+                    MessageBox.Show("ошибка");
+                    if (ObjExcel != null)
+                    {
+                        ObjExcel.Quit();
+                    }
 
 
-                //}
+                }
             }
         }
     }
