@@ -108,6 +108,7 @@ namespace Diplon_kusakin.Pages
                 return;
             }
 
+
             ReadyIsp ReadyIsp = new ReadyIsp(selectedRequest, mainWindow, currentUser);
             mainWindow.OpenPages(ReadyIsp);
         }
