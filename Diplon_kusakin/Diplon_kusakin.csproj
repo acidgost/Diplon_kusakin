@@ -83,6 +83,7 @@
     <Reference Include="System.Diagnostics.DiagnosticSource, Version=8.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Diagnostics.DiagnosticSource.8.0.1\lib\net462\System.Diagnostics.DiagnosticSource.dll</HintPath>
     </Reference>
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Drawing.Common, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Drawing.Common.8.0.4\lib\net462\System.Drawing.Common.dll</HintPath>
     </Reference>
@@ -128,8 +129,27 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="CommentsClass.cs" />
     <Compile Include="Pages\AddIsp.xaml.cs">
       <DependentUpon>AddIsp.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\AddRequest.xaml.cs">
+      <DependentUpon>AddRequest.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\AddUser.xaml.cs">
+      <DependentUpon>AddUser.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\CommentMeneger.xaml.cs">
+      <DependentUpon>CommentMeneger.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Comments.xaml.cs">
+      <DependentUpon>Comments.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\CommentsAdd.xaml.cs">
+      <DependentUpon>CommentsAdd.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\EddIsp.xaml.cs">
+      <DependentUpon>EddIsp.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\ispolnitel.xaml.cs">
       <DependentUpon>ispolnitel.xaml</DependentUpon>
@@ -140,8 +160,17 @@
     <Compile Include="Pages\manager.xaml.cs">
       <DependentUpon>manager.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\MaterialsIsp.xaml.cs">
+      <DependentUpon>MaterialsIsp.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\ReadyIsp.xaml.cs">
+      <DependentUpon>ReadyIsp.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\reg.xaml.cs">
       <DependentUpon>reg.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Sotrudniki.xaml.cs">
+      <DependentUpon>Sotrudniki.xaml</DependentUpon>
     </Compile>
     <Compile Include="Request.cs" />
     <Compile Include="Users.cs" />
@@ -162,6 +191,30 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\AddRequest.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\AddUser.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\CommentMeneger.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Comments.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\CommentsAdd.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\EddIsp.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\ispolnitel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -178,7 +231,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\MaterialsIsp.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\ReadyIsp.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\reg.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Sotrudniki.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

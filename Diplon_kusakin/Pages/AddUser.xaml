@@ -1,0 +1,55 @@
+﻿<Page x:Class="Diplon_kusakin.Pages.AddUser"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Diplon_kusakin.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="AddUser">
+
+    <Grid Background="AliceBlue">
+        <Grid VerticalAlignment="Top" Height="50" Background="#008080">
+            <Label Content="Добавление пользователя" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,0" FontWeight="Bold" Foreground="White" />
+            <Button Background="White" x:Name="butback" Content="Назад" Margin="0,10,26,10" Height="30" Click="butback_Click" Foreground="Black" FontWeight="Bold" FontSize="14" BorderThickness="0" HorizontalAlignment="Right" Width="87">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="10"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+        </Grid>
+        <StackPanel VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,55,0,0">
+            <Label Content="ФИО" FontSize="15"/>
+            <TextBox Name="fio1" Height="27"  TextWrapping="Wrap" Text="" Width="283" BorderThickness="0,0,0,1.5" FontSize="16"/>
+
+            <Label Content="Почта" FontSize="15"/>
+            <TextBox Name="email" Height="27"  TextWrapping="Wrap" Text="" Width="281" BorderThickness="0,0,0,1.5" FontSize="16"/>
+            <Label Content="Логин" FontSize="15"/>
+            <TextBox Name="log" Height="27"  TextWrapping="Wrap" Text="" Width="285" BorderThickness="0,0,0,1.5" FontSize="16"/>
+            <Label Content="Пароль" FontSize="15"/>
+            <Grid>
+                <PasswordBox  x:Name="pas" Height="27" BorderThickness="0,0,0,1.5" FontSize="15"/>
+
+                <TextBox x:Name="pasVisible" Height="27" Text="{Binding Password, ElementName=pas}" Visibility="Collapsed" BorderThickness="0,0,0,1.5" FontSize="15"/>
+                <CheckBox Margin="268,6,0,6" Checked="showPasswordCheckBox_Checked" Unchecked="showPasswordCheckBox_Unchecked" />
+            </Grid>
+            <Label Content="Повторите пароль" FontSize="15"/>
+            <Grid>
+                <PasswordBox  x:Name="pas2" Height="27" BorderThickness="0,0,0,1.5" FontSize="16"/>
+
+                <TextBox x:Name="pas2Visible" Height="27" Text="{Binding Password, ElementName=pas}" Visibility="Collapsed" BorderThickness="0,0,0,1.5" FontSize="15"/>
+                <CheckBox Margin="268,6,0,6" Checked="Open_Checked" Unchecked="Close_Unchecked" />
+            </Grid>
+            <Button Background="#1268b3" x:Name="butreg" Content="Добавить" Margin="0,15,0,0" Width="160" Height="30" Click="AddUser_Click" Foreground="White" FontWeight="Bold" FontSize="14" BorderThickness="0">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="10"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+
+
+        </StackPanel>
+    </Grid>
+</Page>
