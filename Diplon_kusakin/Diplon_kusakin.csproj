@@ -175,6 +175,12 @@
     <Compile Include="Pages\Sotrudniki.xaml.cs">
       <DependentUpon>Sotrudniki.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\UpdateRequest.xaml.cs">
+      <DependentUpon>UpdateRequest.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\UpdateRequestManager.xaml.cs">
+      <DependentUpon>UpdateRequestManager.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\User.xaml.cs">
       <DependentUpon>User.xaml</DependentUpon>
     </Compile>
@@ -254,6 +260,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\Sotrudniki.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\UpdateRequest.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\UpdateRequestManager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
