@@ -80,7 +80,7 @@
                             <GridViewColumn Header="Заявка" DisplayMemberBinding="{Binding Id }" Width="auto"/>
                             <GridViewColumn Header="Дата добавления" DisplayMemberBinding="{Binding Registration_Date}" Width="auto"/>
                             <GridViewColumn Header="Оборудование" DisplayMemberBinding="{Binding Equipment}" Width="auto"/>
-                            <GridViewColumn Header="Кабинет" DisplayMemberBinding="{Binding Kabinet}" Width="auto"/>
+                            <GridViewColumn Header="Код Ошибки" DisplayMemberBinding="{Binding Kabinet}" Width="auto"/>
                             <GridViewColumn Header="Тип неисправности" DisplayMemberBinding="{Binding Equipment_Type	}" Width="auto"/>
                             <GridViewColumn Header="Описание проблемы" DisplayMemberBinding="{Binding ProblemDescription}" Width="auto"/>
                             <GridViewColumn Header="ФИО" DisplayMemberBinding="{Binding Full_name}" Width="auto"/>
@@ -127,7 +127,7 @@
 
                 <!-- Меню, появляется при IsChecked=true -->
                 <StackPanel x:Name="MenuPanel" Visibility="Collapsed" Margin="0,10,0,0">
-                    <Button Content="Пользователи" Height="30" Width="60" Background="#008080" Foreground="Black" FontWeight="Bold" FontSize="10" BorderThickness="0" Click="User_Click"/>
+                    <Button Content="Пользователи" Height="30" Width="60" Background="Tomato" Foreground="Black" FontWeight="Bold" FontSize="10" BorderThickness="0" Click="User_Click"/>
                     <Button Content="Команда" Height="30" Width="60" Background="Tomato" Foreground="Black" FontWeight="Bold" FontSize="10" BorderThickness="0" Click="Sotrud_Click" Margin="0 5"/>
                     <Button Content="Комментарии" Height="30" Width="60" Background="Tomato" Foreground="Black" FontWeight="Bold" FontSize="10" BorderThickness="0" Click="btnComment_Click" Margin="0 5"/>
                     <Button Content="Импорт" Height="30" Width="60" Background="Tomato" Foreground="Black" FontWeight="Bold" FontSize="10" BorderThickness="0" Click="Button_Click" Margin="0 5"/>

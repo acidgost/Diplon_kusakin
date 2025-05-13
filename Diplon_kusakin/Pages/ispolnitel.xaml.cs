@@ -47,7 +47,7 @@ namespace Diplon_kusakin.Pages
             {
                 userRequests = new ObservableCollection<Request>();
 
-                string query = $"SELECT * FROM Requests WHERE Assignee = '{currentUser.Full_Name}'";
+                string query = $"SELECT * FROM Requests";
                 using (MySqlDataReader reader = Connection.SqlConnection(query))
                 {
                     while (reader.Read())

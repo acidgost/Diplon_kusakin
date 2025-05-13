@@ -12,7 +12,7 @@
         <Grid >
             <Image Source="/Img/EVTS.png"/>
         </Grid>
-        <Grid Background="Black" Opacity="0.85"/>
+        <Grid Background="Black" Opacity="0.65"/>
 
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
             <Label Content="Авторизация" FontSize="40" BorderBrush="White"   Margin="20,0,21,11" Height="65" VerticalAlignment="Bottom" Foreground="White"/>

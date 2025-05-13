@@ -48,7 +48,7 @@ namespace Diplon_kusakin.Pages
                 {
                     if (!Regex.IsMatch(fio1.Text, pattern))
                     {
-                        MessageBox.Show("Поле ФИО в неправильном формате.\nПример: Кузнецов Кирилл Константинович");
+                        MessageBox.Show("Поле ФИО в неправильном формате.\nПример: Кусакин Данил Игоревич");
                         return;
                     }
                     if (!Regex.IsMatch(ema, @"\b[A-Za-z0-9.%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b"))
