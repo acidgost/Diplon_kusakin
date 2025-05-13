@@ -16,6 +16,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace Diplon_kusakin.Pages
 {
@@ -41,7 +43,30 @@ namespace Diplon_kusakin.Pages
             originalRequests = userRequests;
         }
 
-        public void LoadUserRequests()
+        public async Task SendMessageToTelegram(string message)
+        {
+            string token = "7720783710:AAFsO-tlOKcH_wznUyVPlg3yc5omTY63-jU";
+            string chatId = "542716186";
+            string url = $"https://api.telegram.org/bot{token}/sendMessage?chat_id={chatId}&text={Uri.EscapeDataString(message)}";
+
+            using (HttpClient client = new HttpClient())
+            {
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(url);
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        Console.WriteLine($"Ошибка при отправке сообщения: {response.ReasonPhrase}");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Ошибка при отправке запроса: {ex.Message}");
+                }
+            }
+        }
+
+        public async Task LoadUserRequests()
         {
             try
             {
@@ -68,9 +93,11 @@ namespace Diplon_kusakin.Pages
                             DateEnd = reader.GetString("DateEnd")
                         };
                         userRequests.Add(request);
+
                         if (request.Status == "в работе" && !requestsChecked)
                         {
-                            MessageBox.Show("Вам назначенна заявка: " + request.Id + "");
+                            string message = $"Вам назначенна заявка: {request.Id}";
+                            await SendMessageToTelegram(message); // ✅ теперь корректно
                         }
                     }
                 }
@@ -82,6 +109,8 @@ namespace Diplon_kusakin.Pages
                 MessageBox.Show($"Ошибка при загрузке заявок: {ex.Message}");
             }
         }
+
+
 
         private void Exit(object sender, RoutedEventArgs e)
         {

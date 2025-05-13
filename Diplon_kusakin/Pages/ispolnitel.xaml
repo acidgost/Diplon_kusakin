@@ -94,7 +94,7 @@
                             <GridViewColumn Header="Заявка" DisplayMemberBinding="{Binding Id}" Width="80"/>
                             <GridViewColumn Header="Дата добавления" DisplayMemberBinding="{Binding Registration_Date}" Width="140"/>
                             <GridViewColumn Header="Оборудование" DisplayMemberBinding="{Binding Equipment}" Width="120"/>
-                            <GridViewColumn Header="Кабинет" DisplayMemberBinding="{Binding Kabinet}" Width="80"/>
+                            <GridViewColumn Header="Код Ошибки" DisplayMemberBinding="{Binding Kabinet}" Width="80"/>
                             <GridViewColumn Header="Тип неисправности" DisplayMemberBinding="{Binding Equipment_Type}" Width="140"/>
                             <GridViewColumn Header="Описание проблемы" DisplayMemberBinding="{Binding ProblemDescription}" Width="200"/>
                             <GridViewColumn Header="ФИО" DisplayMemberBinding="{Binding Full_name}" Width="120"/>
