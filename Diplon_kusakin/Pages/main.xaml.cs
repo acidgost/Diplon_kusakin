@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -37,7 +38,7 @@ namespace Diplon_kusakin.Pages
             originalRequests = userRequests;
         }
 
-        public void LoadUserRequests()
+        public async Task LoadUserRequests()
         {
             try
             {
@@ -60,26 +61,22 @@ namespace Diplon_kusakin.Pages
                             Contact_Information = reader.GetString("Contact_Information"),
                             Status = reader.GetString("Status"),
                             Assignee = reader.GetString("Assignee"),
-                            Priority = reader.GetString("Priority")
+                            Priority = reader.GetString("Priority"),
+                            Prosmotr = reader.IsDBNull(reader.GetOrdinal("Prosmotr"))
+                                ? null
+                                : reader.GetString("Prosmotr")
                         };
-
-
-                        if (!reader.IsDBNull(reader.GetOrdinal("Prosmotr")))
-                        {
-                            request.Prosmotr = reader.GetString("Prosmotr");
-                        }
-                        else
-                        {
-                            request.Prosmotr = null;
-                        }
 
                         userRequests.Add(request);
 
                         if (request.Status == "готово" && request.Prosmotr != "Просмотренно")
                         {
-                            MessageBox.Show("Ваша заявка: " + request.Id + " готова!\nСкоро с вами свяжутся.");
-                            string sqlquery = $"UPDATE Requests SET Prosmotr = 'Просмотренно' WHERE id = {request.Id}";
-                            Connection.SqlConnection(sqlquery, parameters);
+                            string message = $"Ваша заявка №{request.Id} готова! Скоро с вами свяжутся.";
+                            MessageBox.Show(message);
+                            await SendMessageToTelegram(message);
+
+                            string updateQuery = $"UPDATE Requests SET Prosmotr = 'Просмотренно' WHERE id = {request.Id}";
+                            await Task.Run(() => Connection.SqlConnection(updateQuery, parameters));
                         }
                     }
                 }
@@ -89,6 +86,29 @@ namespace Diplon_kusakin.Pages
             catch (Exception ex)
             {
                 MessageBox.Show($"Ошибка при загрузке заявок пользователя: {ex.Message}");
+            }
+        }
+
+        public async Task SendMessageToTelegram(string message)
+        {
+            string token = "7720783710:AAFsO-tlOKcH_wznUyVPlg3yc5omTY63-jU";
+            string chatId = "542716186";
+            string url = $"https://api.telegram.org/bot{token}/sendMessage?chat_id={chatId}&text={Uri.EscapeDataString(message)}";
+
+            using (HttpClient client = new HttpClient())
+            {
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(url);
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        Console.WriteLine($"Ошибка при отправке сообщения: {response.ReasonPhrase}");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Ошибка при отправке запроса в Telegram: {ex.Message}");
+                }
             }
         }
 
