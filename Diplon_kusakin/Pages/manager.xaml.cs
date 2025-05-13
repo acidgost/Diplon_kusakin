@@ -15,6 +15,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -40,11 +41,15 @@ namespace Diplon_kusakin.Pages
             InitializeComponent();
             LoadUserRequests();
             originalRequests = userRequests;
-            BurgerButton.Checked += (s, e) => MenuPanel.Visibility = Visibility.Visible;
-            BurgerButton.Unchecked += (s, e) => MenuPanel.Visibility = Visibility.Collapsed;
+            //BurgerButton.Checked += (s, e) => MenuPanel.Visibility = Visibility.Visible;
+            //BurgerButton.Unchecked += (s, e) => MenuPanel.Visibility = Visibility.Collapsed;
         }
 
-
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            var fadeIn = (Storyboard)this.Resources["FadeInStoryboard"];
+            fadeIn.Begin(MainPanel);
+        }
 
         public void LoadUserRequests()
         {
@@ -125,18 +130,31 @@ namespace Diplon_kusakin.Pages
         }
         private void SearchButton_Click(object sender, RoutedEventArgs e)
         {
-            string searchTerm = searchTextBox.Text.Trim();
+            //string searchTerm = searchTextBox.Text.Trim();
 
-            if (string.IsNullOrWhiteSpace(searchTerm))
+            //if (string.IsNullOrWhiteSpace(searchTerm))
+            //{
+            //    requestsListView.ItemsSource = originalRequests;
+            //    MessageBox.Show("Введите номер или параметры для поиска.", "Поиск", MessageBoxButton.OK, MessageBoxImage.Information);
+
+            //    return;
+            //}
+
+
+            //SearchRequests(searchTerm);
+        }
+
+        private void HamburgerButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Переключение видимости меню
+            if (SideMenuPanel.Visibility == Visibility.Visible)
             {
-                requestsListView.ItemsSource = originalRequests;
-                MessageBox.Show("Введите номер или параметры для поиска.", "Поиск", MessageBoxButton.OK, MessageBoxImage.Information);
-
-                return;
+                SideMenuPanel.Visibility = Visibility.Collapsed;
             }
-
-
-            SearchRequests(searchTerm);
+            else
+            {
+                SideMenuPanel.Visibility = Visibility.Visible;
+            }
         }
 
         private void SearchRequests(string searchTerm)

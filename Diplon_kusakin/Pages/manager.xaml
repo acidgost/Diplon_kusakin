@@ -1,87 +1,171 @@
 ﻿<Page x:Class="Diplon_kusakin.Pages.manager"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:Diplon_kusakin.Pages"
-      mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="manager">
+      Title="Manager Page"
+      Loaded="Page_Loaded">
 
+    <!-- Ресурсы страницы: фон, анимация -->
     <Page.Resources>
-        <ControlTemplate x:Key="NonScrollableListView" TargetType="ListView">
-            <ItemsPresenter/>
-        </ControlTemplate>
+
+        <Style x:Key="FormButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#1268b3"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Height" Value="35"/>
+            <Setter Property="Width" Value="160"/>
+            <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+            <Setter Property="RenderTransform">
+                <Setter.Value>
+                    <ScaleTransform ScaleX="1" ScaleY="1"/>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="15">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Trigger.EnterActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)"
+                                         To="1.05" Duration="0:0:0.2"/>
+                                <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleY)"
+                                         To="1.05" Duration="0:0:0.2"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </Trigger.EnterActions>
+                    <Trigger.ExitActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)"
+                                         To="1" Duration="0:0:0.2"/>
+                                <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleY)"
+                                         To="1" Duration="0:0:0.2"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </Trigger.ExitActions>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- Градиентный фон -->
+        <LinearGradientBrush x:Key="BackgroundBrush" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#001F3F" Offset="0" />
+            <GradientStop Color="#0074D9" Offset="1" />
+        </LinearGradientBrush>
+
+        <!-- Анимация появления -->
+        <Storyboard x:Key="FadeInStoryboard">
+            <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:1"/>
+            <ThicknessAnimation Storyboard.TargetProperty="Margin" From="0,40,0,0" To="0,0,0,0" Duration="0:0:1"/>
+        </Storyboard>
+
+        <!-- Эффект тени -->
+        <DropShadowEffect x:Key="DropShadowEffect"
+                          BlurRadius="10"
+                          ShadowDepth="5"
+                          Direction="270"
+                          Color="Black"
+                          Opacity="0.5"/>
+
+        <!-- Стиль кнопок в меню -->
+        <Style x:Key="MenuButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="Tomato"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="10"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Margin" Value="0 10"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="15">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="White"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Стиль для гамбургер-кнопки -->
+        <Style x:Key="HamburgerButtonStyle" TargetType="ToggleButton">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ToggleButton">
+                        <Border Background="{TemplateBinding Background}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    CornerRadius="15">
+                            <!-- Скругляем углы -->
+                            <ContentPresenter HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Width" Value="40"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="Background" Value="Tomato"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="Padding" Value="5"/>
+
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="White"/>
+                </Trigger>
+            </Style.Triggers>
+
+            <!-- Применение CornerRadius к Border внутри ToggleButton -->
+            
+        </Style>
     </Page.Resources>
 
-    <Grid Background="AliceBlue">
+    <!-- Основной фон -->
+    <Grid Background="{StaticResource BackgroundBrush}">
+        <!-- Оформление "карточкой" -->
+        <Border CornerRadius="10"
+                Background="White"
+                Padding="20"
+                Margin="60"
+                Effect="{StaticResource DropShadowEffect}">
 
+            <!-- Главная панель, к ней будет применена анимация -->
+            <StackPanel x:Name="MainPanel" Opacity="0">
+                <TextBlock Text="Список заявок"
+                           FontSize="24"
+                           FontWeight="Bold"
+                           Margin="0,0,0,20"/>
 
-
-        <Grid VerticalAlignment="Top" Height="50" Background="#008080">
-            <Label Content="Администратор" FontSize="24" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0" FontWeight="Bold" x:Name="name" Foreground="White"/>
-            <Button Content="Выход"  Width="100" Height="30" Background="White" Foreground="Black" FontWeight="Bold" FontSize="14" BorderThickness="0" HorizontalAlignment="Right" Click="Exit" Margin="10">
-                <Button.Style>
-                    <Style TargetType="Button">
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="Button">
-                                    <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="15">
-                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                    </Border>
-                                    <ControlTemplate.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter TargetName="border" Property="Background" Value="White"/>
-                                        </Trigger>
-                                        <Trigger Property="IsMouseOver" Value="False">
-                                            <Setter TargetName="border" Property="Background" Value="White"/>
-                                        </Trigger>
-                                    </ControlTemplate.Triggers>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </Button.Style>
-            </Button>
-            <TextBox x:Name="searchTextBox" Height="20" VerticalAlignment="Center" HorizontalAlignment="Right" Width="200" Margin="0,0,160,0"/>
-            <Button Content="Поиск" Height="20" Width="38" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,123,0" Click="SearchButton_Click" Background="#FF2196F3" Foreground="White" FontWeight="Bold" FontSize="10" BorderThickness="0" >
-                <Button.Style>
-                    <Style TargetType="Button">
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="Button">
-                                    <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
-                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                    </Border>
-                                    <ControlTemplate.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter TargetName="border" Property="Background" Value="#FF2196F3"/>
-                                        </Trigger>
-                                        <Trigger Property="IsMouseOver" Value="False">
-                                            <Setter TargetName="border" Property="Background" Value="#FF2196F3"/>
-                                        </Trigger>
-                                    </ControlTemplate.Triggers>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </Button.Style>
-            </Button>
-
-        </Grid>
-
-
-
-        <Grid Margin="79,50,0,-40">
-            <ScrollViewer Margin="0,0,0,42"  >
-                <ListView x:Name="requestsListView" ItemsSource="{Binding userRequests}">
+                <ListView x:Name="requestsListView"
+                          Height="400"
+                          ItemsSource="{Binding userRequests}">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="Заявка" DisplayMemberBinding="{Binding Id }" Width="auto"/>
+                            <GridViewColumn Header="Заявка" DisplayMemberBinding="{Binding Id}" Width="auto"/>
                             <GridViewColumn Header="Дата добавления" DisplayMemberBinding="{Binding Registration_Date}" Width="auto"/>
                             <GridViewColumn Header="Оборудование" DisplayMemberBinding="{Binding Equipment}" Width="auto"/>
-                            <GridViewColumn Header="Код Ошибки" DisplayMemberBinding="{Binding Kabinet}" Width="auto"/>
-                            <GridViewColumn Header="Тип неисправности" DisplayMemberBinding="{Binding Equipment_Type	}" Width="auto"/>
+                            <GridViewColumn Header="Кабинет" DisplayMemberBinding="{Binding Kabinet}" Width="auto"/>
+                            <GridViewColumn Header="Тип неисправности" DisplayMemberBinding="{Binding Equipment_Type}" Width="auto"/>
                             <GridViewColumn Header="Описание проблемы" DisplayMemberBinding="{Binding ProblemDescription}" Width="auto"/>
                             <GridViewColumn Header="ФИО" DisplayMemberBinding="{Binding Full_name}" Width="auto"/>
                             <GridViewColumn Header="Статус" DisplayMemberBinding="{Binding Status}" Width="auto"/>
@@ -91,9 +175,7 @@
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal">
-                                            <Button Content="Удалить" Click="DeleteUser_Click" CommandParameter="{Binding}" Background="White" Foreground="Black">
-
-                                            </Button>
+                                            <Button Content="Удалить" Click="DeleteUser_Click" Style="{StaticResource FormButtonStyle}" CommandParameter="{Binding}" Background="White" Foreground="Black"/>
                                         </StackPanel>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
@@ -102,37 +184,55 @@
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal">
-                                            <Button Content="Назначить исполнителя" Click="btnEdit_Click" CommandParameter="{Binding}" Background="White" Foreground="Black">
-
-                                            </Button>
+                                            <Button Content="Назначить исполнителя" Style="{StaticResource FormButtonStyle}" Click="btnEdit_Click" CommandParameter="{Binding}" Background="White" Foreground="Black"/>
                                         </StackPanel>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-
                         </GridView>
                     </ListView.View>
                 </ListView>
-            </ScrollViewer>
-
-        </Grid>
-
-        <Grid Background="#008080" HorizontalAlignment="Left" Width="79" Margin="0,50,0,10">
-            <!-- Бургер и меню -->
-            <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0">
-                <!-- Кнопка-бургер -->
-                <ToggleButton x:Name="BurgerButton" Width="40" Height="40" Background="Teal" BorderThickness="0">
-                    <Path Data="M0,5 L30,5 M0,15 L30,15 M0,25 L30,25" Stroke="White" StrokeThickness="3"/>
-                </ToggleButton>
-
-                <!-- Меню, появляется при IsChecked=true -->
-                <StackPanel x:Name="MenuPanel" Visibility="Collapsed" Margin="0,10,0,0">
-                    <Button Content="Пользователи" Height="30" Width="60" Background="Tomato" Foreground="Black" FontWeight="Bold" FontSize="10" BorderThickness="0" Click="User_Click"/>
-                    <Button Content="Команда" Height="30" Width="60" Background="Tomato" Foreground="Black" FontWeight="Bold" FontSize="10" BorderThickness="0" Click="Sotrud_Click" Margin="0 5"/>
-                    <Button Content="Комментарии" Height="30" Width="60" Background="Tomato" Foreground="Black" FontWeight="Bold" FontSize="10" BorderThickness="0" Click="btnComment_Click" Margin="0 5"/>
-                    <Button Content="Импорт" Height="30" Width="60" Background="Tomato" Foreground="Black" FontWeight="Bold" FontSize="10" BorderThickness="0" Click="Button_Click" Margin="0 5"/>
-                </StackPanel>
             </StackPanel>
+        </Border>
+
+        <!-- Основная сетка с двумя колонками: меню и содержимое -->
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <!-- для меню -->
+                <ColumnDefinition Width="*"/>
+                <!-- для основного контента -->
+            </Grid.ColumnDefinitions>
+
+            <!-- Боковая панель -->
+            <StackPanel x:Name="SideMenuPanel"
+                        Background="Transparent"
+                        Width="200"
+                        Visibility="Collapsed"
+                        VerticalAlignment="Top"
+                        Margin="10, 60, 10, 10">
+                <Button Content="Пользователи" Height="30" Click="User_Click" Style="{StaticResource MenuButtonStyle}" />
+                <Button Content="Команда" Height="30" Click="Sotrud_Click" Style="{StaticResource MenuButtonStyle}" />
+                <Button Content="Коментарии" Height="30" Click="btnComment_Click" Style="{StaticResource MenuButtonStyle}" />
+                <Button Content="Импорт" Height="30" Click="Button_Click" Style="{StaticResource MenuButtonStyle}" />
+                <Button Content="Выход" Height="30" Click="Exit" Style="{StaticResource MenuButtonStyle}" />
+                
+            </StackPanel>
+
+            <!-- Гамбургер-кнопка с применением стиля -->
+            <ToggleButton x:Name="HamburgerButton"
+                          Width="40"
+                          Height="40"
+                          Margin="10"
+                          Content="☰"
+                          FontSize="20"
+                          Style="{StaticResource HamburgerButtonStyle}"
+                          Click="HamburgerButton_Click" />
+
+            <!-- Основной контент -->
+            <Grid Grid.Column="1" Margin="10">
+                <!-- Тут основной контент -->
+            </Grid>
         </Grid>
     </Grid>
 </Page>

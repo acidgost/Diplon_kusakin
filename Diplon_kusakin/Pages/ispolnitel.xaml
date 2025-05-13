@@ -1,182 +1,140 @@
 ﻿<Page x:Class="Diplon_kusakin.Pages.ispolnitel"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:Diplon_kusakin.Pages"
-      mc:Ignorable="d" 
+      mc:Ignorable="d"
       d:DesignHeight="450" d:DesignWidth="800"
       Title="ispolnitel">
 
-    <Grid Background="AliceBlue">
+    <Page.Resources>
+        <LinearGradientBrush x:Key="BackgroundBrush" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#001F3F" Offset="0" />
+            <GradientStop Color="#0074D9" Offset="1" />
+        </LinearGradientBrush>
 
-        <Grid VerticalAlignment="Top" Height="50" Background="#008080">
-            <Label Content="Исполнитель" FontSize="24" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,0,0,0" FontWeight="Bold" Foreground="White" x:Name="name"/>
-            <Button Content="Выход"  Width="100" Height="30" Background="White" Foreground="Black" FontWeight="Bold" FontSize="14" BorderThickness="0" HorizontalAlignment="Right" Click="Exit" Margin="10">
-                <Button.Style>
-                    <Style TargetType="Button">
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="Button">
-                                    <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="15">
-                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                    </Border>
-                                    <ControlTemplate.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter TargetName="border" Property="Background" Value="White"/>
-                                        </Trigger>
-                                        <Trigger Property="IsMouseOver" Value="False">
-                                            <Setter TargetName="border" Property="Background" Value="White"/>
-                                        </Trigger>
-                                    </ControlTemplate.Triggers>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </Button.Style>
-            </Button>
-            <TextBox x:Name="searchTextBox" Height="20" VerticalAlignment="Center" HorizontalAlignment="Right" Width="200" Margin="0,0,160,0"/>
-            <Button Content="Поиск" Height="20" Width="38" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,123,0" Click="SearchButton_Click" Background="#FF2196F3" Foreground="White" FontWeight="Bold" FontSize="10" BorderThickness="0" >
-                <Button.Style>
-                    <Style TargetType="Button">
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="Button">
-                                    <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
-                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                    </Border>
-                                    <ControlTemplate.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter TargetName="border" Property="Background" Value="#FF64B5F6"/>
-                                        </Trigger>
-                                        <Trigger Property="IsMouseOver" Value="False">
-                                            <Setter TargetName="border" Property="Background" Value="#FF2196F3"/>
-                                        </Trigger>
-                                    </ControlTemplate.Triggers>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </Button.Style>
-            </Button>
-        </Grid>
+        <DropShadowEffect x:Key="DropShadowEffect"
+                          BlurRadius="10"
+                          ShadowDepth="5"
+                          Direction="270"
+                          Color="Black"
+                          Opacity="0.5"/>
 
-        <Grid Margin="0,50,0,50">
-            <ScrollViewer VerticalScrollBarVisibility="Hidden">
-                <ListView x:Name="requestsListView" ItemsSource="{Binding userRequests}">
+        <Style x:Key="FormButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#1268b3"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Height" Value="35"/>
+            <Setter Property="Width" Value="140"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="15">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
+
+    <Grid Background="{StaticResource BackgroundBrush}">
+        <Border CornerRadius="10" Background="White" Margin="30" Padding="20" Effect="{StaticResource DropShadowEffect}">
+            <Grid>
+
+                <!-- Верхняя панель -->
+                <Grid Height="50" VerticalAlignment="Top">
+                    <Label x:Name="name"
+                           Content="Исполнитель"
+                           FontSize="24"
+                           FontWeight="Bold"
+                           VerticalAlignment="Center"
+                           Foreground="Black" Margin="0,0,560,0"/>
+
+                    <TextBox x:Name="searchTextBox"
+                             Height="24"
+                             VerticalAlignment="Center"
+                             HorizontalAlignment="Right"
+                             Width="200"
+                             Margin="0,0,220,0"/>
+
+                    <Button Content="Поиск"
+                            Width="60"
+                            Style="{StaticResource FormButtonStyle}"
+                            FontSize="12"
+                            Margin="0,0,150,0"
+                            Click="SearchButton_Click"
+                            Background="#2196F3"
+                            Foreground="White"
+                            FontWeight="Bold"
+                            BorderThickness="0"
+                            Height="24"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Right"/>
+
+                    <Button Content="Выход"
+                            Style="{StaticResource FormButtonStyle}"
+                            HorizontalAlignment="Right"
+                            Margin="0,8,10,7"
+                            Click="Exit"
+                            Width="100"/>
+                </Grid>
+
+                <!-- Список заявок -->
+                <ListView x:Name="requestsListView"
+                          ItemsSource="{Binding userRequests}"
+                          Margin="0,60,0,70"
+                          BorderThickness="0"
+                          FontSize="13">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="Заявка" DisplayMemberBinding="{Binding Id }" Width="auto"/>
-                            <GridViewColumn Header="Дата добавления" DisplayMemberBinding="{Binding Registration_Date}" Width="auto"/>
-                            <GridViewColumn Header="Оборудование" DisplayMemberBinding="{Binding Equipment}" Width="auto"/>
-                            <GridViewColumn Header="Кабинет" DisplayMemberBinding="{Binding Kabinet}" Width="auto"/>
-                            <GridViewColumn Header="Тип неисправности" DisplayMemberBinding="{Binding Equipment_Type	}" Width="auto"/>
-                            <GridViewColumn Header="Описание проблемы" DisplayMemberBinding="{Binding ProblemDescription}" Width="auto"/>
-                            <GridViewColumn Header="ФИО" DisplayMemberBinding="{Binding Full_name}" Width="auto"/>
-                            <GridViewColumn Header="Исполнитель" DisplayMemberBinding="{Binding Assignee}" Width="auto"/>
-                            <GridViewColumn Header="Статус" DisplayMemberBinding="{Binding Status}" Width="auto"/>
-                            <GridViewColumn Header="Дата окончания" DisplayMemberBinding="{Binding DateEnd}" Width="auto"/>
-
+                            <GridViewColumn Header="Заявка" DisplayMemberBinding="{Binding Id}" Width="80"/>
+                            <GridViewColumn Header="Дата добавления" DisplayMemberBinding="{Binding Registration_Date}" Width="140"/>
+                            <GridViewColumn Header="Оборудование" DisplayMemberBinding="{Binding Equipment}" Width="120"/>
+                            <GridViewColumn Header="Кабинет" DisplayMemberBinding="{Binding Kabinet}" Width="80"/>
+                            <GridViewColumn Header="Тип неисправности" DisplayMemberBinding="{Binding Equipment_Type}" Width="140"/>
+                            <GridViewColumn Header="Описание проблемы" DisplayMemberBinding="{Binding ProblemDescription}" Width="200"/>
+                            <GridViewColumn Header="ФИО" DisplayMemberBinding="{Binding Full_name}" Width="120"/>
+                            <GridViewColumn Header="Исполнитель" DisplayMemberBinding="{Binding Assignee}" Width="120"/>
+                            <GridViewColumn Header="Статус" DisplayMemberBinding="{Binding Status}" Width="100"/>
+                            <GridViewColumn Header="Дата окончания" DisplayMemberBinding="{Binding DateEnd}" Width="140"/>
                         </GridView>
                     </ListView.View>
                 </ListView>
-            </ScrollViewer>
 
-        </Grid>
-        <Grid VerticalAlignment="Bottom" Height="50" Background="#008080">
-            <Button Padding="30,0" Content="Оказать помощь" FontSize="16" Background="#008080" Foreground="Black" FontWeight="Bold" BorderThickness="1" Margin="0,10,154,10" Click="Button_Click" HorizontalAlignment="Right" Width="138">
-                <Button.Style>
-                    <Style TargetType="Button">
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="Button">
-                                    <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="15">
-                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                    </Border>
-                                    <ControlTemplate.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter TargetName="border" Property="Background" Value="lightgray"/>
-                                        </Trigger>
-                                        <Trigger Property="IsMouseOver" Value="False">
-                                            <Setter TargetName="border" Property="Background" Value="White"/>
-                                        </Trigger>
-                                    </ControlTemplate.Triggers>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </Button.Style>
-            </Button>
-            <Button Content="Заказать деталь" FontSize="16" Background="White" Foreground="Black" FontWeight="Bold"  BorderThickness="1" Margin="0,10,10,10" Click="btnEdit_Click" HorizontalAlignment="Right" Width="139">
-                <Button.Style>
-                    <Style TargetType="Button">
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="Button">
-                                    <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="15">
-                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                    </Border>
-                                    <ControlTemplate.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter TargetName="border" Property="Background" Value="lightgray"/>
-                                        </Trigger>
-                                        <Trigger Property="IsMouseOver" Value="False">
-                                            <Setter TargetName="border" Property="Background" Value="White"/>
-                                        </Trigger>
-                                    </ControlTemplate.Triggers>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </Button.Style>
-            </Button>
-            <Button Content="Отчёт" FontSize="16" Background="White" Foreground="Black" FontWeight="Bold"  BorderThickness="1" Margin="0,10,422,10" Click="btnOtchhet_Click" HorizontalAlignment="Right" Width="80">
-                <Button.Style>
-                    <Style TargetType="Button">
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="Button">
-                                    <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="15">
-                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                    </Border>
-                                    <ControlTemplate.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter TargetName="border" Property="Background" Value="lightgray"/>
-                                        </Trigger>
-                                        <Trigger Property="IsMouseOver" Value="False">
-                                            <Setter TargetName="border" Property="Background" Value="White"/>
-                                        </Trigger>
-                                    </ControlTemplate.Triggers>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </Button.Style>
-            </Button>
-            <Button Content="Комментарий" FontSize="16" Background="White" Foreground="Black" FontWeight="Bold"  BorderThickness="1" Margin="0,10,297,10" Click="btnComment_Click" HorizontalAlignment="Right" Width="120">
-                <Button.Style>
-                    <Style TargetType="Button">
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="Button">
-                                    <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="15">
-                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                    </Border>
-                                    <ControlTemplate.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter TargetName="border" Property="Background" Value="lightgray"/>
-                                        </Trigger>
-                                        <Trigger Property="IsMouseOver" Value="False">
-                                            <Setter TargetName="border" Property="Background" Value="White"/>
-                                        </Trigger>
-                                    </ControlTemplate.Triggers>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </Button.Style>
-            </Button>
-        </Grid>
+                <!-- Нижняя панель -->
+                <Grid VerticalAlignment="Bottom" Height="50">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
 
+                        <Button Content="Комментарий"
+                                Style="{StaticResource FormButtonStyle}"
+                                Background="#1268b3"
+                                Foreground="White"
+                                Click="btnComment_Click"/>
+
+                        <Button Content="Отчёт"
+                                Style="{StaticResource FormButtonStyle}"
+                                Background="#1268b3"
+                                Foreground="White"
+                                Click="btnOtchhet_Click"/>
+
+                        <Button Content="Заказать деталь"
+                                Style="{StaticResource FormButtonStyle}"
+Background="#1268b3"
+Foreground="White"
+                                Click="btnEdit_Click"/>
+
+                        <Button Content="Оказать помощь"
+                                Style="{StaticResource FormButtonStyle}"
+                                Background="#1268b3"
+                                Foreground="White"
+                                Click="Button_Click"/>
+                    </StackPanel>
+                </Grid>
+            </Grid>
+        </Border>
     </Grid>
 </Page>

@@ -3,54 +3,77 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:Diplon_kusakin.Pages"
-      mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      mc:Ignorable="d"
+      Loaded="Page_Loaded"
       Title="login">
 
-    <Grid>
-        <Grid >
-            <Image Source="/Img/EVTS.png"/>
-        </Grid>
-        <Grid Background="Black" Opacity="0.65"/>
+    <Page.Resources>
+        <!-- Градиентный фон -->
+        <LinearGradientBrush x:Key="BackgroundBrush" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#001F3F" Offset="0" />
+            <GradientStop Color="#0074D9" Offset="1" />
+        </LinearGradientBrush>
 
-        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-            <Label Content="Авторизация" FontSize="40" BorderBrush="White"   Margin="20,0,21,11" Height="65" VerticalAlignment="Bottom" Foreground="White"/>
-            <Label Content="Логин" FontSize="18" Foreground="White"/>
-            <TextBox x:Name="Login" Height="31" Width="284"  FontSize="16">
-                <TextBox.Resources>
-                    <Style TargetType="{x:Type Border}">
-                        <Setter Property="CornerRadius" Value="5"/>
-                    </Style>
-                </TextBox.Resources>
-            </TextBox>
-            <Label Content="Пароль" FontSize="18" Foreground="White" />
-            <PasswordBox x:Name="Password" Height="32" Width="285"  FontSize="16" />
+        <!-- Анимация появления -->
+        <Storyboard x:Key="FadeInStoryboard">
+            <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:1"/>
+            <ThicknessAnimation Storyboard.TargetProperty="Margin" From="0,40,0,0" To="0,0,0,0" Duration="0:0:1"/>
+        </Storyboard>
+    </Page.Resources>
 
-            <TextBox x:Name="pasVisible" Height="32" Text="{Binding Password, ElementName=pas}" Visibility="Collapsed" BorderThickness="0,0,0,1.5" FontSize="16">
-                <TextBox.Resources>
-                    <Style TargetType="{x:Type Border}">
-                        <Setter Property="CornerRadius" Value="5"/>
-                    </Style>
-                </TextBox.Resources>
-            </TextBox>
-            <CheckBox x:Name="showPasswordCheckBox" Content="Показать пароль" VerticalAlignment="Top" Margin="0,5,0,0" Checked="showPasswordCheckBox_Checked" Unchecked="showPasswordCheckBox_Unchecked" Foreground="White"/>
+    <Grid Background="{StaticResource BackgroundBrush}">
+        <StackPanel x:Name="MainPanel" VerticalAlignment="Center" HorizontalAlignment="Center" Opacity="0" Margin="0,40,0,0">
+            <Border CornerRadius="10" Background="#AAFFFFFF" Padding="40">
+                <Border.Effect>
+                    <DropShadowEffect Color="Black" BlurRadius="15" ShadowDepth="4" Opacity="0.4"/>
+                </Border.Effect>
+                <StackPanel>
+                    <StackPanel>
+                        <TextBlock Text="Авторизация" FontSize="36" FontWeight="Bold" Foreground="#001F3F" TextAlignment="Center" Margin="0,0,0,20"/>
 
-            <Button Name="butlog" Content="Вход" Width="160" Height="30" Click="butlog_Click_1" Background="#008080" Foreground="White" FontWeight="Bold" FontSize="14" BorderThickness="0" Margin="0,20,0,0">
-                <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="10"/>
-                    </Style>
-                </Button.Resources>
+                        <TextBlock Text="Логин" FontSize="16" Margin="0,0,0,5" Foreground="#001F3F"/>
+                        <TextBox x:Name="Login" Height="35" FontSize="16" Padding="5" Background="#F0F8FF" BorderBrush="#0074D9" BorderThickness="1" />
 
-            </Button>
-            <Button FontSize="15" Margin="10,10,10,0" Command="{Binding ClickCommand}" Click="Button_Click " Background="White">
-                <Button.Template>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <TextBlock Text="У вас нет аккаунта?" TextAlignment="Center" Foreground="Gray"/>
-                    </ControlTemplate>
-                </Button.Template>
-            </Button>
+                        <TextBlock Text="Пароль" FontSize="16" Margin="15,15,0,5" Foreground="#001F3F"/>
+                        <PasswordBox x:Name="Password" Height="35" FontSize="16" Padding="5" Background="#F0F8FF" BorderBrush="#0074D9" BorderThickness="1" />
+
+                        <TextBox x:Name="pasVisible" Height="35" FontSize="16" Padding="5" Background="#F0F8FF" BorderBrush="#0074D9" BorderThickness="1"
+             Visibility="Collapsed" />
+
+                        <CheckBox x:Name="showPasswordCheckBox" Content="Показать пароль" Margin="0,10,0,0" Foreground="#001F3F"
+              Checked="showPasswordCheckBox_Checked" Unchecked="showPasswordCheckBox_Unchecked"/>
+
+                        <Button Name="butlog" Content="Войти" Height="40" Margin="0,20,0,0" FontWeight="Bold"
+            Background="#0074D9" Foreground="White" BorderThickness="0" FontSize="16"
+            Cursor="Hand" Click="butlog_Click_1">
+                            <Button.Style>
+                                <Style TargetType="Button">
+                                    <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+                                    <Setter Property="RenderTransform">
+                                        <Setter.Value>
+                                            <ScaleTransform ScaleX="1" ScaleY="1"/>
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="#005fa3"/>
+                                            <Setter Property="RenderTransform">
+                                                <Setter.Value>
+                                                    <ScaleTransform ScaleX="1.05" ScaleY="1.05"/>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+
+                        <Button Click="Button_Click" Background="Transparent" BorderThickness="0" Margin="0,10,0,0">
+                            <TextBlock Text="У вас нет аккаунта?" FontSize="14" Foreground="Gray" TextAlignment="Center"/>
+                        </Button>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
         </StackPanel>
     </Grid>
 </Page>

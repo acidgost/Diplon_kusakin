@@ -10,6 +10,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -98,6 +99,13 @@ namespace Diplon_kusakin.Pages
             }
         }
 
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            DoubleAnimation fadeIn = new DoubleAnimation(0, 1, new Duration(TimeSpan.FromSeconds(0.5)));
+            MainContainer.BeginAnimation(OpacityProperty, fadeIn);
+        }
+
+
 
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -126,4 +134,5 @@ namespace Diplon_kusakin.Pages
             return regex.IsMatch(input);
         }
     }
+
 }

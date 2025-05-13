@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.IO;
+using System.Windows.Media.Animation;
 
 
 namespace Diplon_kusakin.Pages
@@ -38,6 +39,12 @@ namespace Diplon_kusakin.Pages
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             mainWindow.OpenPages(new Pages.reg(mainWindow, currentUser));
+        }
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            Storyboard sb = (Storyboard)this.Resources["FadeInStoryboard"];
+            Storyboard.SetTarget(sb, MainPanel);
+            sb.Begin();
         }
 
         private void butlog_Click_1(object sender, RoutedEventArgs e)
@@ -158,6 +165,8 @@ namespace Diplon_kusakin.Pages
             pasVisible.Visibility = Visibility.Visible;
             pasVisible.Text = password;
         }
+
+
 
         private void showPasswordCheckBox_Unchecked(object sender, RoutedEventArgs e)
         {

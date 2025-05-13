@@ -8,97 +8,99 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="AddRequest">
 
-    <Grid Background="AliceBlue">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
+    <Page.Resources>
+        <!-- Градиентный фон -->
+        <LinearGradientBrush x:Key="BackgroundBrush" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#001F3F" Offset="0" />
+            <GradientStop Color="#0074D9" Offset="1" />
+        </LinearGradientBrush>
 
+        <!-- Эффект тени -->
+        <DropShadowEffect x:Key="DropShadowEffect"
+                          BlurRadius="10"
+                          ShadowDepth="5"
+                          Direction="270"
+                          Color="Black"
+                          Opacity="0.5"/>
 
+        <!-- Стиль кнопки -->
+        <Style x:Key="FormButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#1268b3"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Height" Value="35"/>
+            <Setter Property="Width" Value="160"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                CornerRadius="15">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
 
+    <Grid Background="{StaticResource BackgroundBrush}">
+        <Border CornerRadius="10"
+                Background="White"
+                Padding="20"
+                Margin="60"
+                Effect="{StaticResource DropShadowEffect}">
 
-        </Grid.RowDefinitions>
-        <Grid Background="#008080">
-            <TextBlock Grid.Row="0" Text="Добавление заявки" FontSize="24" FontWeight="Bold" Margin="10" Foreground="White"/>
-            <Button Grid.Row="0" Content="Назад"  Width="100" Height="30" Background="White" Foreground="Black" FontWeight="Bold" FontSize="14" BorderThickness="0" HorizontalAlignment="Right" Click="Button_Click" Margin="10">
-                <Button.Style>
-                    <Style TargetType="Button">
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="Button">
-                                    <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="15">
-                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                    </Border>
-                                    <ControlTemplate.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter TargetName="border" Property="Background" Value="White"/>
-                                        </Trigger>
-                                        <Trigger Property="IsMouseOver" Value="False">
-                                            <Setter TargetName="border" Property="Background" Value="White"/>
-                                        </Trigger>
-                                    </ControlTemplate.Triggers>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </Button.Style>
-            </Button>
-        </Grid>
+            <Grid>
+                <!-- Верхняя панель -->
+                <Grid VerticalAlignment="Top" Height="50" Background="Transparent">
+                    <Label Content="Добавление заявки"
+                           FontSize="24"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           FontWeight="Bold"
+                           Foreground="Black"/>
+                    <Button x:Name="butback"
+                            Style="{StaticResource FormButtonStyle}"
+                            Content="Назад"
+                            Margin="0,10,18,10"
+                            Height="30"
+                            Click="Button_Click"
+                            Foreground="White"
+                            FontWeight="Bold"
+                            FontSize="14"
+                            Background="{StaticResource BackgroundBrush}"
+                            BorderThickness="0"
+                            HorizontalAlignment="Right"
+                            Width="100"/>
+                </Grid>
 
-        <StackPanel Grid.Row="1"  Margin="10">
-            <TextBlock Text="Оборудование:" Margin="0 0 10 0" FontSize="16"/>
+                <!-- Форма добавления заявки -->
+                <StackPanel VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,70,0,0">
+                    <Label Content="Оборудование" FontSize="15"/>
+                    <TextBox x:Name="txtEquipment" Height="35" Width="300" BorderBrush="#1268b3" BorderThickness="1" FontSize="16" Padding="5" Margin="0,0,0,10"/>
 
-            <TextBox x:Name="txtEquipment" Height="31" Margin="0" FontSize="16" BorderThickness="0,0,0,1.5" />
+                    <Label Content="Код ошибки" FontSize="15"/>
+                    <TextBox x:Name="txtKabinet" Height="35" Width="300" BorderBrush="#1268b3" BorderThickness="1" FontSize="16" Padding="5" Margin="0,0,0,10"/>
 
-        </StackPanel>
-        <StackPanel Grid.Row="2"  Margin="10">
-            <TextBlock Text="Код Оишбки:" Margin="0 0 10 0" FontSize="16"/>
+                    <Label Content="Тип неисправности" FontSize="15"/>
+                    <ComboBox x:Name="txtFaultType" Height="35" Width="300" FontSize="16" BorderBrush="#1268b3" BorderThickness="1" Margin="0,0,0,10">
+                        <ComboBoxItem Content="Механическая неисправность"/>
+                        <ComboBoxItem Content="Электрическая неисправность"/>
+                        <ComboBoxItem Content="Программная неисправность"/>
+                    </ComboBox>
 
-            <TextBox x:Name="txtKabinet" Height="31" Margin="0" FontSize="16" BorderThickness="0,0,0,1.5" />
+                    <Label Content="Описание проблемы" FontSize="15"/>
+                    <TextBox x:Name="txtDescription" Height="100" Width="300" BorderBrush="#1268b3" BorderThickness="1" FontSize="16" Margin="0,0,0,10" TextWrapping="Wrap" AcceptsReturn="True"/>
 
-        </StackPanel>
-
-        <StackPanel Grid.Row="3"  Margin="10">
-            <TextBlock Text="Тип неисправности:" Margin="0 0 10 0" FontSize="16"/>
-
-            <ComboBox x:Name="txtFaultType" Height="31" Margin="0" FontSize="16" BorderThickness="0,0,0,1.5">
-                <ComboBoxItem Content="Механическая неисправность"/>
-                <ComboBoxItem Content="Электрическая неисправность"/>
-                <ComboBoxItem Content="Программная неисправность"/>
-            </ComboBox>
-        </StackPanel>
-
-        <StackPanel Grid.Row="4" Margin="10">
-            <TextBlock Text="Описание проблемы:" Margin="0 0 0 5" FontSize="16"/>
-            <TextBox x:Name="txtDescription" Height="100" Margin="0" FontSize="16" />
-        </StackPanel>
-        <StackPanel Grid.Row="5" Margin="10">
-            <Button  Content="Добавить заявку" Click="btnAdd_Click" Width="160" Height="35" Background="#1268b3" Foreground="White" FontWeight="Bold" FontSize="14" BorderThickness="0" Margin="307,141,293,-30" Grid.Row="4" >
-                <Button.Style>
-                    <Style TargetType="Button">
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="Button">
-                                    <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="15">
-                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                    </Border>
-                                    <ControlTemplate.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter TargetName="border" Property="Background" Value="#1268b3"/>
-                                        </Trigger>
-                                        <Trigger Property="IsMouseOver" Value="False">
-                                            <Setter TargetName="border" Property="Background" Value="#1268b3"/>
-                                        </Trigger>
-                                    </ControlTemplate.Triggers>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </Button.Style>
-            </Button>
-        </StackPanel>
-
+                    <Button Content="Добавить заявку"
+                            Click="btnAdd_Click"
+                            Style="{StaticResource FormButtonStyle}"
+                            Margin="0,15,0,0"
+                            HorizontalAlignment="Center"/>
+                </StackPanel>
+            </Grid>
+        </Border>
     </Grid>
 </Page>

@@ -8,48 +8,111 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="AddUser">
 
-    <Grid Background="AliceBlue">
-        <Grid VerticalAlignment="Top" Height="50" Background="#008080">
-            <Label Content="Добавление пользователя" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,0" FontWeight="Bold" Foreground="White" />
-            <Button Background="White" x:Name="butback" Content="Назад" Margin="0,10,26,10" Height="30" Click="butback_Click" Foreground="Black" FontWeight="Bold" FontSize="14" BorderThickness="0" HorizontalAlignment="Right" Width="87">
-                <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="10"/>
-                    </Style>
-                </Button.Resources>
-            </Button>
-        </Grid>
-        <StackPanel VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,55,0,0">
-            <Label Content="ФИО" FontSize="15"/>
-            <TextBox Name="fio1" Height="27"  TextWrapping="Wrap" Text="" Width="283" BorderThickness="0,0,0,1.5" FontSize="16"/>
+    <Page.Resources>
+        <!-- Градиентный фон -->
+        <LinearGradientBrush x:Key="BackgroundBrush" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#001F3F" Offset="0" />
+            <GradientStop Color="#0074D9" Offset="1" />
+        </LinearGradientBrush>
 
-            <Label Content="Почта" FontSize="15"/>
-            <TextBox Name="email" Height="27"  TextWrapping="Wrap" Text="" Width="281" BorderThickness="0,0,0,1.5" FontSize="16"/>
-            <Label Content="Логин" FontSize="15"/>
-            <TextBox Name="log" Height="27"  TextWrapping="Wrap" Text="" Width="285" BorderThickness="0,0,0,1.5" FontSize="16"/>
-            <Label Content="Пароль" FontSize="15"/>
+        <!-- Эффект тени -->
+        <DropShadowEffect x:Key="DropShadowEffect"
+                          BlurRadius="10"
+                          ShadowDepth="5"
+                          Direction="270"
+                          Color="Black"
+                          Opacity="0.5"/>
+
+        <!-- Стиль кнопки -->
+        <Style x:Key="FormButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#1268b3"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Height" Value="35"/>
+            <Setter Property="Width" Value="160"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                CornerRadius="15">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
+
+    <Grid Background="{StaticResource BackgroundBrush}">
+        <Border CornerRadius="10"
+                Background="White"
+                Padding="20"
+                Margin="60"
+                Effect="{StaticResource DropShadowEffect}">
+
             <Grid>
-                <PasswordBox  x:Name="pas" Height="27" BorderThickness="0,0,0,1.5" FontSize="15"/>
+                <!-- Верхняя панель -->
+                <Grid VerticalAlignment="Top" Height="50" Background="Transparent">
+                    <Label Content="Добавление пользователя"
+                           FontSize="24"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           FontWeight="Bold"
+                           Foreground="Black"/>
+                    <Button x:Name="butback"
+                            Content="Назад"
+                            Style="{StaticResource FormButtonStyle}"
+                            Margin="0,10,18,10"
+                            Height="30"
+                            Click="butback_Click"
+                            Foreground="White"
+                            FontWeight="Bold"
+                            FontSize="14"
+                            Background="{StaticResource BackgroundBrush}"
+                            BorderThickness="0"
+                            HorizontalAlignment="Right"
+                            Width="100"/>
+                </Grid>
 
-                <TextBox x:Name="pasVisible" Height="27" Text="{Binding Password, ElementName=pas}" Visibility="Collapsed" BorderThickness="0,0,0,1.5" FontSize="15"/>
-                <CheckBox Margin="268,6,0,6" Checked="showPasswordCheckBox_Checked" Unchecked="showPasswordCheckBox_Unchecked" />
+                <!-- Форма добавления пользователя -->
+                <StackPanel VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,70,0,0">
+                    <Label Content="ФИО" FontSize="15"/>
+                    <TextBox Name="fio1" Height="35" Width="300" BorderBrush="#1268b3" BorderThickness="1" FontSize="16" Padding="5" Margin="0,0,0,10"/>
+
+                    <Label Content="Почта" FontSize="15"/>
+                    <TextBox Name="email" Height="35" Width="300" BorderBrush="#1268b3" BorderThickness="1" FontSize="16" Padding="5" Margin="0,0,0,10"/>
+
+                    <Label Content="Логин" FontSize="15"/>
+                    <TextBox Name="log" Height="35" Width="300" BorderBrush="#1268b3" BorderThickness="1" FontSize="16" Padding="5" Margin="0,0,0,10"/>
+
+                    <Label Content="Пароль" FontSize="15"/>
+                    <Grid Width="300">
+                        <PasswordBox x:Name="pas" Height="35" BorderBrush="#1268b3" BorderThickness="1" FontSize="16" Padding="5"/>
+                        <TextBox x:Name="pasVisible" Height="35" Text="{Binding Password, ElementName=pas}" 
+                                 Visibility="Collapsed" BorderBrush="#1268b3" BorderThickness="1" FontSize="16" Padding="5"/>
+                        <CheckBox Margin="265,8,0,8" HorizontalAlignment="Left"
+                                  Checked="showPasswordCheckBox_Checked" Unchecked="showPasswordCheckBox_Unchecked"/>
+                    </Grid>
+
+                    <Label Content="Повторите пароль" FontSize="15"/>
+                    <Grid Width="300">
+                        <PasswordBox x:Name="pas2" Height="35" BorderBrush="#1268b3" BorderThickness="1" FontSize="16" Padding="5"/>
+                        <TextBox x:Name="pas2Visible" Height="35" Text="{Binding Password, ElementName=pas2}" 
+                                 Visibility="Collapsed" BorderBrush="#1268b3" BorderThickness="1" FontSize="16" Padding="5"/>
+                        <CheckBox Margin="265,8,0,8" HorizontalAlignment="Left"
+                                  Checked="Open_Checked" Unchecked="Close_Unchecked"/>
+                    </Grid>
+
+                    <Button x:Name="butreg"
+                            Content="Добавить"
+                            Click="AddUser_Click"
+                            Style="{StaticResource FormButtonStyle}"
+                            Margin="0,15,0,0"
+                            HorizontalAlignment="Center"/>
+                </StackPanel>
             </Grid>
-            <Label Content="Повторите пароль" FontSize="15"/>
-            <Grid>
-                <PasswordBox  x:Name="pas2" Height="27" BorderThickness="0,0,0,1.5" FontSize="16"/>
-
-                <TextBox x:Name="pas2Visible" Height="27" Text="{Binding Password, ElementName=pas}" Visibility="Collapsed" BorderThickness="0,0,0,1.5" FontSize="15"/>
-                <CheckBox Margin="268,6,0,6" Checked="Open_Checked" Unchecked="Close_Unchecked" />
-            </Grid>
-            <Button Background="#1268b3" x:Name="butreg" Content="Добавить" Margin="0,15,0,0" Width="160" Height="30" Click="AddUser_Click" Foreground="White" FontWeight="Bold" FontSize="14" BorderThickness="0">
-                <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="10"/>
-                    </Style>
-                </Button.Resources>
-            </Button>
-
-
-        </StackPanel>
+        </Border>
     </Grid>
 </Page>

@@ -10,6 +10,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -30,6 +31,8 @@ namespace Diplon_kusakin.Pages
             InitializeComponent();
             user = user_;
         }
+
+        
 
         private void butback_Click(object sender, RoutedEventArgs e)
         {
@@ -249,6 +252,12 @@ namespace Diplon_kusakin.Pages
                 Console.WriteLine($"Ошибка при регистрации пользователя: {ex.Message}");
                 return false; // Возвращаем false в случае ошибки
             }
+        }
+        
+        private void User_Click(object sender, RoutedEventArgs e)
+        {
+            // Логика обработки клика на "Пользователи"
+            MessageBox.Show("Открыть список пользователей");
         }
     }
 }
