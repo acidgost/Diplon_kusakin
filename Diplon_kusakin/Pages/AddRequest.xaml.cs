@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -32,11 +33,10 @@ namespace Diplon_kusakin.Pages
             this.currentUser = user;
         }
 
-        private void btnAdd_Click(object sender, RoutedEventArgs e)
+        private async void btnAdd_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-
                 if (txtEquipment.Text.Length > 0 && txtKabinet.Text.Length > 0 && txtFaultType.Text.Length > 0 && txtDescription.Text.Length > 0)
                 {
                     if (!IsValidEquipment(txtEquipment.Text))
@@ -46,7 +46,7 @@ namespace Diplon_kusakin.Pages
                     }
                     if (!IsValidKabinet(txtKabinet.Text))
                     {
-                        MessageBox.Show("Заполните поле кабинет правильно!\nПример:A209");
+                        MessageBox.Show("Заполните поле кабинет правильно!\nПример: A209");
                         return;
                     }
                     if (!IsValidDescription(txtDescription.Text))
@@ -54,7 +54,6 @@ namespace Diplon_kusakin.Pages
                         MessageBox.Show("Недопустимое описание оборудования.\nЗаполните без вводных знаков и на русском!");
                         return;
                     }
-
 
                     DateTime dateAdded = DateTime.Now;
                     string formattedDate = dateAdded.ToString("dd/MM/yyyy HH:mm");
@@ -66,34 +65,66 @@ namespace Diplon_kusakin.Pages
                     string query = $"INSERT INTO Requests (Registration_Date, Equipment_Type, Equipment, ProblemDescription, Contact_Information," +
                         $"Status, Assignee, Priority, Idclient, Full_name, DateEnd, Kabinet)" +
                         $" VALUES (@Registration_Date, @Equipment_Type, @Equipment, @ProblemDescription," +
-                        $"'{currentUser.Contact_Information}', 'в ожидании', 'Не назначен', 'стандартный', @Idclient, @Full_name, 'Не назначено',@Kabinet )";
+                        $"'{currentUser.Contact_Information}', 'в ожидании', 'Не назначен', 'стандартный', @Idclient, @Full_name, 'Не назначено', @Kabinet)";
+
                     List<MySqlParameter> parameters = new List<MySqlParameter>
-                {
-                    new MySqlParameter("@Registration_Date", formattedDate),
-                    new MySqlParameter("@Equipment_Type", faultType),
-                    new MySqlParameter("@Equipment", equipment),
-                    new MySqlParameter("@ProblemDescription", description),
-                    new MySqlParameter("@Kabinet", kabinet),
-                    new MySqlParameter("@Contact_Information", currentUser.Contact_Information),
-                    new MySqlParameter("@Full_name", currentUser.Full_Name),
-                    new MySqlParameter("@Idclient", currentUser.Id)
-                };
+            {
+                new MySqlParameter("@Registration_Date", formattedDate),
+                new MySqlParameter("@Equipment_Type", faultType),
+                new MySqlParameter("@Equipment", equipment),
+                new MySqlParameter("@ProblemDescription", description),
+                new MySqlParameter("@Kabinet", kabinet),
+                new MySqlParameter("@Full_name", currentUser.Full_Name),
+                new MySqlParameter("@Idclient", currentUser.Id)
+            };
 
                     Connection.SqlConnection(query, parameters);
 
                     MessageBox.Show("Заявка успешно добавлена!");
-                    main mainPage = new main(mainWindow, currentUser); // передаем оба аргумента
+
+                    // Отправка сообщения в Telegram
+                    string telegramMessage = $"✅ Новая заявка от {currentUser.Full_Name}!\n" +
+                                             $"📅 Дата: {formattedDate}\n" +
+                                             $"📍 Кабинет: {kabinet}\n" +
+                                             $"🔧 Оборудование: {equipment}\n" +
+                                             $"📋 Проблема: {description}";
+                    await SendMessageToTelegram(telegramMessage);
+
+                    // Переход на главную страницу
+                    main mainPage = new main(mainWindow, currentUser);
                     mainWindow.OpenPages(mainPage);
                 }
                 else
                 {
                     MessageBox.Show("Заполните все поля!");
                 }
-
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Ошибка при добавлении заявки: {ex.Message}");
+            }
+        }
+
+        public async Task SendMessageToTelegram(string message)
+        {
+            string token = "7720783710:AAFsO-tlOKcH_wznUyVPlg3yc5omTY63-jU";
+            string chatId = "542716186";
+            string url = $"https://api.telegram.org/bot{token}/sendMessage?chat_id={chatId}&text={Uri.EscapeDataString(message)}";
+
+            using (HttpClient client = new HttpClient())
+            {
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(url);
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        Console.WriteLine($"Ошибка при отправке сообщения: {response.ReasonPhrase}");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Ошибка при отправке в Telegram: {ex.Message}");
+                }
             }
         }
 
