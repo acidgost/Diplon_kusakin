@@ -1,0 +1,217 @@
+﻿<Page x:Class="Diplon_kusakin.Pages.Dashboard"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Diplon_kusakin.Pages"
+      xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+      mc:Ignorable="d" 
+      Height="550" Width="900" Background="#f0f2f5"
+      
+      Title="Мониторинг">
+
+    <Page.Resources>
+        <!-- Скопировано из manager -->
+        <Storyboard x:Key="OpenMenuStoryboard">
+            <DoubleAnimation Storyboard.TargetName="SideMenuContainer"
+                             Storyboard.TargetProperty="Width"
+                             To="220"
+                             Duration="0:0:0.3" />
+        </Storyboard>
+
+        <Storyboard x:Key="CloseMenuStoryboard">
+            <DoubleAnimation Storyboard.TargetName="SideMenuContainer"
+                             Storyboard.TargetProperty="Width"
+                             To="0"
+                             Duration="0:0:0.3" />
+        </Storyboard>
+
+        <Style x:Key="FormButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#1268b3"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Height" Value="35"/>
+            <Setter Property="Width" Value="160"/>
+            <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+            <Setter Property="RenderTransform">
+                <Setter.Value>
+                    <ScaleTransform ScaleX="1" ScaleY="1"/>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="15">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Trigger.EnterActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)"
+                                                 To="1.05" Duration="0:0:0.2"/>
+                                <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleY)"
+                                                 To="1.05" Duration="0:0:0.2"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </Trigger.EnterActions>
+                    <Trigger.ExitActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)"
+                                                 To="1" Duration="0:0:0.2"/>
+                                <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleY)"
+                                                 To="1" Duration="0:0:0.2"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </Trigger.ExitActions>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <DropShadowEffect x:Key="DropShadowEffect"
+                          BlurRadius="10"
+                          ShadowDepth="5"
+                          Direction="270"
+                          Color="Black"
+                          Opacity="0.5"/>
+
+        <Style x:Key="MenuButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="Tomato"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="10"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Margin" Value="0 10"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="15">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="White"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="HamburgerButtonStyle" TargetType="ToggleButton">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ToggleButton">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="15" >
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Width" Value="40"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="Background" Value="Tomato"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="Padding" Value="5"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="White"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Page.Resources>
+
+    <Grid>
+        <!-- Меню слева -->
+        <Border x:Name="SideMenuContainer"
+                Background="White"
+                Width="0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Stretch"
+                CornerRadius="0,10,10,0"
+                Effect="{StaticResource DropShadowEffect}">
+            <StackPanel Width="200" Margin="10" VerticalAlignment="Top">
+                <Button Content="Пользователи" Style="{StaticResource MenuButtonStyle}" Click="User_Click"/>
+                <Button Content="Команда" Style="{StaticResource MenuButtonStyle}" Click="Team_Click"/>
+                <Button Content="Комментарии" Style="{StaticResource MenuButtonStyle}" Click="Comments_Click"/>
+                <Button Content="Импорт" Style="{StaticResource MenuButtonStyle}" Click="Import_Click"/>
+                <Button Content="Выход" Style="{StaticResource MenuButtonStyle}" Click="Exit_Click"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Гамбургер -->
+        <ToggleButton x:Name="HamburgerButton"
+                      Width="40"
+                      Height="40"
+                      Margin="10"
+                      Content="☰"
+                      FontSize="20"
+                      Style="{StaticResource HamburgerButtonStyle}"
+                      Click="HamburgerButton_Click"
+                      HorizontalAlignment="Left"
+                      VerticalAlignment="Top"/>
+
+        <!-- Основной контент -->
+        <Border CornerRadius="10" Background="White" Padding="20" Margin="60"
+                Effect="{StaticResource DropShadowEffect}">
+            <StackPanel x:Name="MainPanel" Opacity="0">
+                <TextBlock Text="Мониторинг и аналитика"
+                           FontSize="24"
+                           FontWeight="Bold"
+                           Margin="0,0,0,20"/>
+                <Grid Margin="0" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Открытые заявки -->
+                    <Border Grid.Column="0" Background="White" CornerRadius="10" Margin="5" Padding="10" Effect="{StaticResource DropShadowEffect}">
+                        <StackPanel>
+                            <TextBlock Text="Открытые заявки" FontWeight="Bold"/>
+                            <TextBlock Text="{Binding OpenRequestCount}" FontSize="32"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Среднее время закрытия -->
+                    <Border Grid.Column="1" Background="White" CornerRadius="10" Margin="5" Padding="10" Effect="{StaticResource DropShadowEffect}">
+                        <StackPanel>
+                            <TextBlock Text="Среднее время закрытия" FontWeight="Bold"/>
+                            <TextBlock Text="{Binding AverageCloseTime}" FontSize="32"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Нагрузка на исполнителей (график) -->
+                    <Border Grid.Column="2" Background="White" CornerRadius="10" Margin="5" Padding="10" Effect="{StaticResource DropShadowEffect}">
+                        <StackPanel>
+                            <TextBlock Text="Нагрузка на исполнителей" FontWeight="Bold"/>
+                            <lvc:CartesianChart Series="{Binding LoadSeries}" Height="150"/>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </StackPanel>
+        </Border>
+
+        <!-- Кнопки снизу, справа -->
+        <StackPanel Orientation="Horizontal" Margin="0,0,100,20" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="100" Width="600" >
+            <Button Content="Обновить данные" Style="{StaticResource FormButtonStyle}" Click="RefreshData_Click"/>
+            <Button Width="180" Margin="30,0,0,0" Content="Назад к заявкам" Style="{StaticResource FormButtonStyle}" Click="BackToRequests_Click"/>
+            <Button Width="180" Margin="30,0,0,0" Content="Настройки" Style="{StaticResource FormButtonStyle}" Click="Settings_Click"/>
+        </StackPanel>
+    </Grid>
+</Page>
