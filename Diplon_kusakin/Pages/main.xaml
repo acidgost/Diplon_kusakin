@@ -165,6 +165,7 @@
                     </StackPanel>
                 </Grid>
 
+                
                 <Button x:Name="ChatToggleButton"
         Width="48" Height="48"
         HorizontalAlignment="Right" VerticalAlignment="Bottom"
