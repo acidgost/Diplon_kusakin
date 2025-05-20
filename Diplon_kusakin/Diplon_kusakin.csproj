@@ -354,5 +354,8 @@
   <ItemGroup>
     <Resource Include="Img\icon.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Img\chat_icon.png.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

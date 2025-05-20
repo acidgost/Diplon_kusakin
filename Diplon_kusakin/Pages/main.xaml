@@ -9,6 +9,23 @@
       Title="main">
 
     <Page.Resources>
+
+        <Storyboard x:Key="ShowChatStoryboard">
+            <DoubleAnimation Storyboard.TargetName="ChatPanel"
+                     Storyboard.TargetProperty="Opacity"
+                     From="0" To="1" Duration="0:0:0.3"/>
+            <ThicknessAnimation Storyboard.TargetName="ChatPanel"
+                        Storyboard.TargetProperty="Margin"
+                        From="0,0,-300,0" To="0,0,10,10" Duration="0:0:0.3"/>
+        </Storyboard>
+
+        <!-- Анимация скрытия -->
+        <Storyboard x:Key="HideChatStoryboard">
+            <DoubleAnimation Storyboard.TargetName="ChatPanel"
+                     Storyboard.TargetProperty="Opacity"
+                     From="1" To="0" Duration="0:0:0.3"/>
+        </Storyboard>
+
         <!-- Градиентный фон -->
         <LinearGradientBrush x:Key="BackgroundBrush" StartPoint="0,0" EndPoint="1,1">
             <GradientStop Color="#001F3F" Offset="0" />
@@ -148,7 +165,60 @@
                     </StackPanel>
                 </Grid>
 
+                <Button x:Name="ChatToggleButton"
+        Width="48" Height="48"
+        HorizontalAlignment="Right" VerticalAlignment="Bottom"
+        Margin="0,0,-30,-30"
+        Click="ChatToggleButton_Click"
+        ToolTip="Чат с ИИ"
+        Background="#1268b3"
+        BorderThickness="0"
+        Cursor="Hand"
+        Opacity="0.9">
+                    <Image Source="/Img/chat_icon.png.png" Width="28" Height="28"/>
+                </Button>
+
+                <!-- Панель чата -->
+                <Border x:Name="ChatPanel"
+        Background="#f5f5f5"
+        CornerRadius="10"
+        Width="300" Height="400"
+        Margin="0,0,10,10"
+        VerticalAlignment="Bottom"
+        HorizontalAlignment="Right"
+        Visibility="Collapsed"
+        Opacity="0"
+        Effect="{StaticResource DropShadowEffect}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="40"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Text="Чат с ИИ"
+                   FontWeight="Bold"
+                   FontSize="16"
+                   Foreground="Black"
+                   VerticalAlignment="Center"
+                   Margin="10"/>
+
+                        <ScrollViewer Grid.Row="1" x:Name="ChatHistoryViewer" Margin="10">
+                            <StackPanel x:Name="ChatHistoryPanel"/>
+                        </ScrollViewer>
+
+                        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="10">
+                            <TextBox x:Name="UserMessageTextBox" Width="200" Height="24" Margin="0,0,5,0"/>
+                            <Button Content="➤" Width="40" Click="SendMessageToAI_Click"
+                    Background="#1268b3" Foreground="White" BorderThickness="0"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
             </Grid>
         </Border>
     </Grid>
+
+    
+
 </Page>

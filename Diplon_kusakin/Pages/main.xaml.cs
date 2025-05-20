@@ -15,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using MySql.Data.MySqlClient;
+using System.Windows.Media.Animation;
 
 namespace Diplon_kusakin.Pages
 {
@@ -181,5 +182,65 @@ namespace Diplon_kusakin.Pages
                 requestsListView.ItemsSource = new ObservableCollection<Request>(searchResults);
             }
         }
+
+        private bool isChatOpen = false;
+
+        private void ChatToggleButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (!isChatOpen)
+            {
+                ChatPanel.Visibility = Visibility.Visible;
+                Storyboard showChat = (Storyboard)this.FindResource("ShowChatStoryboard");
+                showChat.Begin();
+            }
+            else
+            {
+                Storyboard hideChat = (Storyboard)this.FindResource("HideChatStoryboard");
+                hideChat.Completed += (s, _) => ChatPanel.Visibility = Visibility.Collapsed;
+                hideChat.Begin();
+            }
+            isChatOpen = !isChatOpen;
+        }
+
+        private async void SendMessageToAI_Click(object sender, RoutedEventArgs e)
+        {
+            string userMessage = UserMessageTextBox.Text.Trim();
+            if (string.IsNullOrWhiteSpace(userMessage)) return;
+
+            AddChatMessage("Вы: " + userMessage, HorizontalAlignment.Right);
+            UserMessageTextBox.Text = "";
+
+            // Здесь можно использовать API OpenAI, если он подключен
+            string aiResponse = await GetFakeAIResponse(userMessage); // временно
+
+            AddChatMessage("ИИ: " + aiResponse, HorizontalAlignment.Left);
+        }
+
+        private void AddChatMessage(string text, HorizontalAlignment alignment)
+        {
+            TextBlock message = new TextBlock
+            {
+                Text = text,
+                TextWrapping = TextWrapping.Wrap,
+                Margin = new Thickness(5),
+                Background = alignment == HorizontalAlignment.Right ? Brushes.LightBlue : Brushes.LightGray,
+                Foreground = Brushes.Black,
+                Padding = new Thickness(8),
+                HorizontalAlignment = alignment,
+                MaxWidth = 220,
+                
+            };
+
+            ChatHistoryPanel.Children.Add(message);
+            ChatHistoryViewer.ScrollToEnd();
+        }
+
+        // Заглушка вместо реального ИИ-запроса
+        private async Task<string> GetFakeAIResponse(string userMessage)
+        {
+            await Task.Delay(500); // эмуляция ответа
+            return "Это тестовый ответ ИИ.";
+        }
+
     }
 }
