@@ -146,14 +146,16 @@ namespace Diplon_kusakin.Pages
 
         private void HamburgerButton_Click(object sender, RoutedEventArgs e)
         {
-            // Переключение видимости меню
-            if (SideMenuPanel.Visibility == Visibility.Visible)
+            if (SideMenuContainer.Width == 0)
             {
-                SideMenuPanel.Visibility = Visibility.Collapsed;
+                Storyboard open = (Storyboard)this.Resources["OpenMenuStoryboard"];
+                open.Begin();
             }
+
             else
             {
-                SideMenuPanel.Visibility = Visibility.Visible;
+                Storyboard close = (Storyboard)this.Resources["CloseMenuStoryboard"];
+                close.Begin();
             }
         }
 

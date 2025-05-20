@@ -7,6 +7,20 @@
     <!-- Ресурсы страницы: фон, анимация -->
     <Page.Resources>
 
+        <Storyboard x:Key="OpenMenuStoryboard">
+            <DoubleAnimation Storyboard.TargetName="SideMenuContainer"
+                     Storyboard.TargetProperty="Width"
+                     To="220"
+                     Duration="0:0:0.3" />
+        </Storyboard>
+
+        <Storyboard x:Key="CloseMenuStoryboard">
+            <DoubleAnimation Storyboard.TargetName="SideMenuContainer"
+                     Storyboard.TargetProperty="Width"
+                     To="0"
+                     Duration="0:0:0.3" />
+        </Storyboard>
+
         <Style x:Key="FormButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="#1268b3"/>
             <Setter Property="Foreground" Value="White"/>
@@ -205,19 +219,26 @@
             </Grid.ColumnDefinitions>
 
             <!-- Боковая панель -->
-            <StackPanel x:Name="SideMenuPanel"
-                        Background="Transparent"
-                        Width="200"
-                        Visibility="Collapsed"
-                        VerticalAlignment="Top"
-                        Margin="10, 60, 10, 10">
-                <Button Content="Пользователи" Height="30" Click="User_Click" Style="{StaticResource MenuButtonStyle}" />
-                <Button Content="Команда" Height="30" Click="Sotrud_Click" Style="{StaticResource MenuButtonStyle}" />
-                <Button Content="Коментарии" Height="30" Click="btnComment_Click" Style="{StaticResource MenuButtonStyle}" />
-                <Button Content="Импорт" Height="30" Click="Button_Click" Style="{StaticResource MenuButtonStyle}" />
-                <Button Content="Выход" Height="30" Click="Exit" Style="{StaticResource MenuButtonStyle}" />
-                
-            </StackPanel>
+            <Border x:Name="SideMenuContainer"
+                    Background="White"
+                    Width="0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Stretch"
+                    Grid.Column="0"
+                    CornerRadius="0,10,10,0"
+                    Effect="{StaticResource DropShadowEffect}"> 
+                <StackPanel x:Name="SideMenuPanel"
+                Width="200"
+                VerticalAlignment="Top"
+                Margin="10">
+                    <Button Content="Пользователи" Click="User_Click" Style="{StaticResource MenuButtonStyle}" />
+                    <Button Content="Команда" Click="Sotrud_Click" Style="{StaticResource MenuButtonStyle}" />
+                    <Button Content="Коментарии" Click="btnComment_Click" Style="{StaticResource MenuButtonStyle}" />
+                    <Button Content="Импорт" Click="Button_Click" Style="{StaticResource MenuButtonStyle}" />
+                    <Button Content="Выход" Click="Exit" Style="{StaticResource MenuButtonStyle}" />
+                </StackPanel>
+            </Border>
+
 
             <!-- Гамбургер-кнопка с применением стиля -->
             <ToggleButton x:Name="HamburgerButton"
