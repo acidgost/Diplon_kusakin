@@ -8,6 +8,149 @@
       Title="login">
 
     <Page.Resources>
+
+        <Style x:Key="FormButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#1268b3"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Height" Value="35"/>
+            <Setter Property="Width" Value="160"/>
+            <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+            <Setter Property="RenderTransform">
+                <Setter.Value>
+                    <ScaleTransform ScaleX="1" ScaleY="1"/>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="15">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Trigger.EnterActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)"
+                                         To="1.05" Duration="0:0:0.2"/>
+                                <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleY)"
+                                         To="1.05" Duration="0:0:0.2"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </Trigger.EnterActions>
+                    <Trigger.ExitActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)"
+                                         To="1" Duration="0:0:0.2"/>
+                                <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleY)"
+                                         To="1" Duration="0:0:0.2"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </Trigger.ExitActions>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="TextBox" x:Key="AnimatedTextBox">
+            <Setter Property="Background" Value="#F0F8FF"/>
+            <Setter Property="BorderBrush" Value="#0074D9"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Height" Value="35"/>
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border x:Name="Border"
+                        CornerRadius="6"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}">
+                            <ScrollViewer x:Name="PART_ContentHost"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <!-- Наведение -->
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Border" Property="BorderBrush" Value="#3399FF"/>
+                            </Trigger>
+
+                            <!-- Фокус -->
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter TargetName="Border" Property="BorderBrush" Value="#005fa3"/>
+                                <Setter TargetName="Border" Property="Background" Value="#ffffff"/>
+                                <Setter TargetName="Border" Property="Effect">
+                                    <Setter.Value>
+                                        <DropShadowEffect Color="#0074D9" BlurRadius="10" ShadowDepth="0" Opacity="0.4"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="PasswordBox" x:Key="AnimatedPasswordBox">
+            <Setter Property="Background" Value="#F0F8FF"/>
+            <Setter Property="BorderBrush" Value="#0074D9"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Height" Value="35"/>
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="PasswordBox">
+                        <Border x:Name="Border"
+                        CornerRadius="6"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}">
+                            <ScrollViewer x:Name="PART_ContentHost"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <!-- Наведение -->
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Border" Property="BorderBrush" Value="#3399FF"/>
+                            </Trigger>
+
+                            <!-- Фокус -->
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter TargetName="Border" Property="BorderBrush" Value="#005fa3"/>
+                                <Setter TargetName="Border" Property="Background" Value="#ffffff"/>
+                                <Setter TargetName="Border" Property="Effect">
+                                    <Setter.Value>
+                                        <DropShadowEffect Color="#0074D9" BlurRadius="10" ShadowDepth="0" Opacity="0.4"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="TextBlock" x:Key="StyledTextBlock">
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="Margin" Value="5,2"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="Black" BlurRadius="5" ShadowDepth="1" Opacity="0.5"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
         <!-- Градиентный фон -->
         <LinearGradientBrush x:Key="BackgroundBrush" StartPoint="0,0" EndPoint="1,1">
             <GradientStop Color="#001F3F" Offset="0" />
@@ -29,46 +172,26 @@
                 </Border.Effect>
                 <StackPanel>
                     <StackPanel>
-                        <TextBlock Text="Авторизация" FontSize="36" FontWeight="Bold" Foreground="#001F3F" TextAlignment="Center" Margin="0,0,0,20"/>
+                        <TextBlock Style="{StaticResource StyledTextBlock}" Text="Авторизация" FontSize="36" FontWeight="Bold" Foreground="#001F3F" TextAlignment="Center" Margin="0,0,0,20"/>
 
-                        <TextBlock Text="Логин" FontSize="16" Margin="0,0,0,5" Foreground="#001F3F"/>
-                        <TextBox x:Name="Login" Height="35" FontSize="16" Padding="5" Background="#F0F8FF" BorderBrush="#0074D9" BorderThickness="1" />
+                        <TextBlock Style="{StaticResource StyledTextBlock}" Text="Логин" FontSize="16" Margin="0,0,0,5" Foreground="#001F3F"/>
+                        <TextBox Style="{StaticResource AnimatedTextBox}"  x:Name="Login" KeyDown="Login_KeyDown" Height="35" FontSize="16" Padding="5" Background="#F0F8FF" BorderBrush="#0074D9" BorderThickness="1" />
 
-                        <TextBlock Text="Пароль" FontSize="16" Margin="15,15,0,5" Foreground="#001F3F"/>
-                        <PasswordBox x:Name="Password" Height="35" FontSize="16" Padding="5" Background="#F0F8FF" BorderBrush="#0074D9" BorderThickness="1" />
+                        <TextBlock Style="{StaticResource StyledTextBlock}" Text="Пароль" FontSize="16" Margin="15,15,0,5" Foreground="#001F3F"/>
+                        <PasswordBox Style="{StaticResource AnimatedPasswordBox}" KeyDown="Login_KeyDown" x:Name="Password" Height="35" FontSize="16" Padding="5" Background="#F0F8FF" BorderBrush="#0074D9" BorderThickness="1" />
 
-                        <TextBox x:Name="pasVisible" Height="35" FontSize="16" Padding="5" Background="#F0F8FF" BorderBrush="#0074D9" BorderThickness="1"
+                        <TextBox Style="{StaticResource AnimatedTextBox}" x:Name="pasVisible" Height="35" FontSize="16" Padding="5" Background="#F0F8FF" BorderBrush="#0074D9" BorderThickness="1"
              Visibility="Collapsed" />
 
-                        <CheckBox x:Name="showPasswordCheckBox" Content="Показать пароль" Margin="0,10,0,0" Foreground="#001F3F"
+                        <CheckBox KeyDown="Login_KeyDown" x:Name="showPasswordCheckBox" Content="Показать пароль" Margin="0,10,0,0" Foreground="#001F3F"
               Checked="showPasswordCheckBox_Checked" Unchecked="showPasswordCheckBox_Unchecked"/>
 
-                        <Button Name="butlog" Content="Войти" Height="40" Margin="0,20,0,0" FontWeight="Bold"
+                        <Button Style="{StaticResource FormButtonStyle}" Name="butlog" Content="Войти" Height="40" Margin="0,20,0,0" FontWeight="Bold"
             Background="#0074D9" Foreground="White" BorderThickness="0" FontSize="16"
-            Cursor="Hand" Click="butlog_Click_1">
-                            <Button.Style>
-                                <Style TargetType="Button">
-                                    <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
-                                    <Setter Property="RenderTransform">
-                                        <Setter.Value>
-                                            <ScaleTransform ScaleX="1" ScaleY="1"/>
-                                        </Setter.Value>
-                                    </Setter>
-                                    <Style.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="Background" Value="#005fa3"/>
-                                            <Setter Property="RenderTransform">
-                                                <Setter.Value>
-                                                    <ScaleTransform ScaleX="1.05" ScaleY="1.05"/>
-                                                </Setter.Value>
-                                            </Setter>
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Button.Style>
-                        </Button>
+            Cursor="Hand" Click="butlog_Click_1"/>
 
-                        <Button Click="Button_Click" Background="Transparent" BorderThickness="0" Margin="0,10,0,0">
+
+                        <Button Style="{StaticResource FormButtonStyle}" Click="Button_Click" Background="Transparent" BorderThickness="0" Margin="0,10,0,0">
                             <TextBlock Text="У вас нет аккаунта?" FontSize="14" Foreground="Gray" TextAlignment="Center"/>
                         </Button>
                     </StackPanel>

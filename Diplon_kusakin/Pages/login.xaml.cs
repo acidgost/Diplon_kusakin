@@ -47,6 +47,13 @@ namespace Diplon_kusakin.Pages
             sb.Begin();
         }
 
+        private void Login_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                butlog_Click_1(butlog, new RoutedEventArgs());
+            }
+        }
         private void butlog_Click_1(object sender, RoutedEventArgs e)
         {
             if (Login.Text.Length > 0 && Password.Password.Length > 0)
