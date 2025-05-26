@@ -136,34 +136,22 @@
     </Page.Resources>
 
     <Grid>
-        <!-- Меню слева -->
-        <Border x:Name="SideMenuContainer"
-                Background="White"
-                Width="0"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Stretch"
-                CornerRadius="0,10,10,0"
-                Effect="{StaticResource DropShadowEffect}">
-            <StackPanel Width="200" Margin="10" VerticalAlignment="Top">
-                <Button Content="Пользователи" Style="{StaticResource MenuButtonStyle}" Click="User_Click"/>
-                <Button Content="Команда" Style="{StaticResource MenuButtonStyle}" Click="Team_Click"/>
-                <Button Content="Комментарии" Style="{StaticResource MenuButtonStyle}" Click="Comments_Click"/>
-                <Button Content="Импорт" Style="{StaticResource MenuButtonStyle}" Click="Import_Click"/>
-                <Button Content="Выход" Style="{StaticResource MenuButtonStyle}" Click="Exit_Click"/>
-            </StackPanel>
-        </Border>
+        <StackPanel>
+            <TextBlock x:Name="OpenRequestsText" FontSize="20" Margin="10"/>
+            <TextBlock x:Name="AvgCloseTimeText" FontSize="20" Margin="10"/>
 
-        <!-- Гамбургер -->
-        <ToggleButton x:Name="HamburgerButton"
-                      Width="40"
-                      Height="40"
-                      Margin="10"
-                      Content="☰"
-                      FontSize="20"
-                      Style="{StaticResource HamburgerButtonStyle}"
-                      Click="HamburgerButton_Click"
-                      HorizontalAlignment="Left"
-                      VerticalAlignment="Top"/>
+            <ItemsControl x:Name="LoadChart" Margin="10">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Key}" Width="200"/>
+                            <ProgressBar Value="{Binding Value}" Maximum="10" Width="200" Height="20" Margin="5"/>
+                            <TextBlock Text="{Binding Value}" Margin="5,0,0,0"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </StackPanel>
 
         <!-- Основной контент -->
         <Border CornerRadius="10" Background="White" Padding="20" Margin="60"
@@ -200,7 +188,7 @@
                     <Border Grid.Column="2" Background="White" CornerRadius="10" Margin="5" Padding="10" Effect="{StaticResource DropShadowEffect}">
                         <StackPanel>
                             <TextBlock Text="Нагрузка на исполнителей" FontWeight="Bold"/>
-                            <lvc:CartesianChart Series="{Binding LoadSeries}" Height="150"/>
+                            
                         </StackPanel>
                     </Border>
                 </Grid>

@@ -34,13 +34,21 @@ namespace Diplon_kusakin.Pages
         private ObservableCollection<Request> originalRequests;
         public ObservableCollection<Request> userRequests;
         Request request1;
+        private MainWindow mainWindow_;
+        private Users currentUser_;
         public manager(MainWindow mainWindow_, Users currentUser)
         {
             
             mainWindow = mainWindow_;
+            this.mainWindow_ = mainWindow_;
             InitializeComponent();
             LoadUserRequests();
+            this.currentUser_ = users;
             originalRequests = userRequests;
+            this.mainWindow = mainWindow_;
+            this.mainWindow_ = mainWindow_;
+            this.currentUser = currentUser;
+            this.currentUser_ = currentUser;
             //BurgerButton.Checked += (s, e) => MenuPanel.Visibility = Visibility.Visible;
             //BurgerButton.Unchecked += (s, e) => MenuPanel.Visibility = Visibility.Collapsed;
         }
@@ -292,7 +300,7 @@ namespace Diplon_kusakin.Pages
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            NavigationService?.Navigate(new Pages.Dashboard(mainWindow));
+            NavigationService?.Navigate(new Pages.Dashboard(mainWindow, currentUser));
         }
     }
 }
