@@ -44,7 +44,7 @@ namespace Diplon_kusakin.Pages
             LoadDashboardData();
             DataContext = this;
 
-            timer.Interval = TimeSpan.FromSeconds(60);
+            timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += (s, e) =>
             {
                 UpdatedTimeTextBlock.Text = DateTime.Now.ToString("dd.MM.yyyy HH:mm");
