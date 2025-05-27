@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -40,24 +41,7 @@ namespace Diplon_kusakin.Pages
             DataContext = this;
         }
 
-        private void LoadDashboardData()
-        {
-            // Пример данных — замени своими из БД
-            OpenRequestCount = GetOpenRequestCount();
-            AverageCloseTime = GetAverageCloseTimeFormatted();
-
-            var executorData = GetExecutorLoad(); // словарь Имя -> Кол-во заявок
-
-            ExecutorLabels = executorData.Keys.ToList();
-            ExecutorLoadSeries = new SeriesCollection
-            {
-                new ColumnSeries
-                {
-                    Title = "Заявки",
-                    Values = new ChartValues<int>(executorData.Values)
-                }
-            };
-        }
+        
 
         private int GetOpenRequestCount()
         {
@@ -82,12 +66,7 @@ namespace Diplon_kusakin.Pages
             };
         }
 
-        private void RefreshData_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            LoadDashboardData();
-            DataContext = null;
-            DataContext = this;
-        }
+        
 
         private void BackToRequests_Click(object sender, System.Windows.RoutedEventArgs e)
         {
@@ -97,6 +76,43 @@ namespace Diplon_kusakin.Pages
         private void Settings_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             // Навигация в настройки
+        }
+
+        private void LoadDashboardData()
+        {
+            try
+            {
+                // 1. Кол-во открытых заявок (в ожидании)
+                string openQuery = "SELECT COUNT(*) FROM Requests WHERE Status = 'в ожидании'";
+                object openCount = Connection.ExecuteScalar(openQuery);
+                OpenRequestsTextBlock.Text = openCount.ToString();
+
+                // 2. Среднее время закрытия (в днях)
+                string avgQuery = @"
+                    SELECT AVG(DATEDIFF(STR_TO_DATE(DateEnd, '%d.%m.%Y'), STR_TO_DATE(Registration_Date, '%d.%m.%Y %H:%i'))) 
+                    FROM Requests 
+                    WHERE Status = 'готово' AND DateEnd <> 'Не назначено'";
+                object avgDays = Connection.ExecuteScalar(avgQuery);
+                AvgCloseTimeTextBlock.Text = avgDays != DBNull.Value ? $"{Math.Round(Convert.ToDouble(avgDays), 1)} дн." : "—";
+
+                // 3. Нагрузка: кол-во заявок на каждого исполнителя
+                string loadQuery = @"
+                    SELECT Assignee, COUNT(*) AS TaskCount 
+                    FROM Requests 
+                    WHERE Assignee <> 'Не назначен'
+                    GROUP BY Assignee";
+                DataTable dt = Connection.ExecuteDataTable(loadQuery);
+                LoadChart.ItemsSource = dt.DefaultView;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ошибка загрузки статистики: " + ex.Message);
+            }
+        }
+
+        private void RefreshData_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

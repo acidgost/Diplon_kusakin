@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -29,6 +30,40 @@ namespace Diplon_kusakin
         {
             connection.Close();
 
+        }
+
+        public static object ExecuteScalar(string query, List<MySqlParameter> parameters = null)
+        {
+            string connectString = "server=127.0.0.1;port=3306;database=dip;uid=root;pwd=;";
+            using (MySqlConnection connection = new MySqlConnection(connectString))
+            {
+                connection.Open();
+                MySqlCommand command = new MySqlCommand(query, connection);
+                if (parameters != null)
+                {
+                    command.Parameters.AddRange(parameters.ToArray());
+                }
+                return command.ExecuteScalar();
+            }
+        }
+
+        public static DataTable ExecuteDataTable(string query, List<MySqlParameter> parameters = null)
+        {
+            string connectString = "server=127.0.0.1;port=3306;database=dip;uid=root;pwd=;";
+            using (MySqlConnection connection = new MySqlConnection(connectString))
+            {
+                connection.Open();
+                MySqlCommand command = new MySqlCommand(query, connection);
+                if (parameters != null)
+                {
+                    command.Parameters.AddRange(parameters.ToArray());
+                }
+
+                MySqlDataAdapter adapter = new MySqlDataAdapter(command);
+                DataTable dt = new DataTable();
+                adapter.Fill(dt);
+                return dt;
+            }
         }
 
 

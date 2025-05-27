@@ -26,6 +26,11 @@
                              Duration="0:0:0.3" />
         </Storyboard>
 
+        <Storyboard x:Key="FadeIn">
+            <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                             From="0" To="1" Duration="0:0:1" />
+        </Storyboard>
+        
         <Style x:Key="FormButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="#1268b3"/>
             <Setter Property="Foreground" Value="White"/>
@@ -134,72 +139,68 @@
             </Style.Triggers>
         </Style>
     </Page.Resources>
-
     <Grid>
-        <StackPanel>
-            <TextBlock x:Name="OpenRequestsText" FontSize="20" Margin="10"/>
-            <TextBlock x:Name="AvgCloseTimeText" FontSize="20" Margin="10"/>
+        <Grid Margin="30">
+            <Grid.Triggers>
+                <EventTrigger RoutedEvent="Grid.Loaded">
+                    <BeginStoryboard Storyboard="{StaticResource FadeIn}" />
+                </EventTrigger>
+            </Grid.Triggers>
 
-            <ItemsControl x:Name="LoadChart" Margin="10">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding Key}" Width="200"/>
-                            <ProgressBar Value="{Binding Value}" Maximum="10" Width="200" Height="20" Margin="5"/>
-                            <TextBlock Text="{Binding Value}" Margin="5,0,0,0"/>
-                        </StackPanel>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-        </StackPanel>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
 
-        <!-- Основной контент -->
-        <Border CornerRadius="10" Background="White" Padding="20" Margin="60"
-                Effect="{StaticResource DropShadowEffect}">
-            <StackPanel x:Name="MainPanel" Opacity="0">
-                <TextBlock Text="Мониторинг и аналитика"
-                           FontSize="24"
-                           FontWeight="Bold"
-                           Margin="0,0,0,20"/>
-                <Grid Margin="0" >
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
+            <TextBlock Text="Панель мониторинга" FontSize="28" FontWeight="Bold" Margin="0,0,0,20"/>
 
-                    <!-- Открытые заявки -->
-                    <Border Grid.Column="0" Background="White" CornerRadius="10" Margin="5" Padding="10" Effect="{StaticResource DropShadowEffect}">
-                        <StackPanel>
-                            <TextBlock Text="Открытые заявки" FontWeight="Bold"/>
-                            <TextBlock Text="{Binding OpenRequestCount}" FontSize="32"/>
-                        </StackPanel>
-                    </Border>
+            <!-- Карточки статистики -->
+            <UniformGrid Grid.Row="1" Columns="3" Margin="0,0,0,30" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="150">
+                <Border Background="White" CornerRadius="20" Padding="20" Margin="10" Effect="{StaticResource DropShadowEffect}">
+                    <StackPanel>
+                        <TextBlock Text="Открытые заявки" FontSize="16" FontWeight="Bold" Foreground="#666"/>
+                        <TextBlock x:Name="OpenRequestsTextBlock" FontSize="36" FontWeight="Bold" Foreground="#1268b3"/>
+                    </StackPanel>
+                </Border>
 
-                    <!-- Среднее время закрытия -->
-                    <Border Grid.Column="1" Background="White" CornerRadius="10" Margin="5" Padding="10" Effect="{StaticResource DropShadowEffect}">
-                        <StackPanel>
-                            <TextBlock Text="Среднее время закрытия" FontWeight="Bold"/>
-                            <TextBlock Text="{Binding AverageCloseTime}" FontSize="32"/>
-                        </StackPanel>
-                    </Border>
+                <Border Background="White" CornerRadius="20" Padding="20" Margin="10" Effect="{StaticResource DropShadowEffect}">
+                    <StackPanel>
+                        <TextBlock Text="Среднее время закрытия" FontSize="16" FontWeight="Bold" Foreground="#666"/>
+                        <TextBlock x:Name="AvgCloseTimeTextBlock" FontSize="36" FontWeight="Bold" Foreground="#1268b3"/>
+                    </StackPanel>
+                </Border>
 
-                    <!-- Нагрузка на исполнителей (график) -->
-                    <Border Grid.Column="2" Background="White" CornerRadius="10" Margin="5" Padding="10" Effect="{StaticResource DropShadowEffect}">
-                        <StackPanel>
-                            <TextBlock Text="Нагрузка на исполнителей" FontWeight="Bold"/>
-                            
-                        </StackPanel>
-                    </Border>
-                </Grid>
+                <Border Background="White" CornerRadius="20" Padding="20" Margin="10" Effect="{StaticResource DropShadowEffect}">
+                    <StackPanel>
+                        <TextBlock Text="Обновлено:" FontSize="16" FontWeight="Bold" Foreground="#666"/>
+                        <TextBlock Text="{Binding Source={x:Static sys:DateTime.Now}, StringFormat={}{0:dd.MM.yyyy HH:mm}}" 
+                               FontSize="18" FontWeight="SemiBold" Foreground="#1268b3"/>
+                    </StackPanel>
+                </Border>
+            </UniformGrid>
+
+            <!-- Диаграмма -->
+            <Border Grid.Row="1" Background="White" CornerRadius="20" Padding="20" Margin="10,180,10,10" Effect="{StaticResource DropShadowEffect}">
+                <StackPanel>
+                    <TextBlock Text="Нагрузка на исполнителей" FontSize="18" FontWeight="Bold" Margin="0,0,0,10"/>
+                    <lvc:CartesianChart x:Name="LoadChart" Height="250">
+                        <lvc:CartesianChart.AxisX>
+                            <lvc:Axis Title="Исполнитель" Labels="{Binding ExecutorNames}" />
+                        </lvc:CartesianChart.AxisX>
+                        <lvc:CartesianChart.AxisY>
+                            <lvc:Axis Title="Кол-во заявок" />
+                        </lvc:CartesianChart.AxisY>
+                    </lvc:CartesianChart>
+                </StackPanel>
+            </Border>
+
+            <!-- Кнопки -->
+            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
+                <Button Content="Обновить данные" Style="{StaticResource FormButtonStyle}" Click="RefreshData_Click"/>
+                <Button Content="Назад к заявкам" Style="{StaticResource FormButtonStyle}" Margin="20,0,0,0" Click="BackToRequests_Click"/>
+                <Button Content="Настройки" Style="{StaticResource FormButtonStyle}" Margin="20,0,0,0" Click="Settings_Click"/>
             </StackPanel>
-        </Border>
-
-        <!-- Кнопки снизу, справа -->
-        <StackPanel Orientation="Horizontal" Margin="0,0,100,20" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="100" Width="600" >
-            <Button Content="Обновить данные" Style="{StaticResource FormButtonStyle}" Click="RefreshData_Click"/>
-            <Button Width="180" Margin="30,0,0,0" Content="Назад к заявкам" Style="{StaticResource FormButtonStyle}" Click="BackToRequests_Click"/>
-            <Button Width="180" Margin="30,0,0,0" Content="Настройки" Style="{StaticResource FormButtonStyle}" Click="Settings_Click"/>
-        </StackPanel>
+        </Grid>
     </Grid>
 </Page>
