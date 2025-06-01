@@ -204,10 +204,11 @@
             </StackPanel>
         </Border>
 
-        <StackPanel Orientation="Horizontal" Margin="0,0,100,-450" HorizontalAlignment="Right" Height="100" Width="700" >
+        <StackPanel Orientation="Horizontal" Margin="0,481,60,31" HorizontalAlignment="Right" Height="100" Width="847" >
             <Button Content="Удалить"  Style="{StaticResource FormButtonStyle}" Click="DeleteUser_Click"/>
-            <Button Width="180" Margin="30" Content="Назначить исполнителя" Style="{StaticResource FormButtonStyle}" Click="btnEdit_Click"/>
+            <Button Width="180" Margin="30" Content="Назначить Тех.Специалиса" Style="{StaticResource FormButtonStyle}" Click="btnEdit_Click"/>
             <Button Width="180" Margin="30" Content="DashBoard" Style="{StaticResource FormButtonStyle}" Click="Button_Click_1" />
+            <Button Width="180" Margin="30" Content="Архив Заявок" Style="{StaticResource FormButtonStyle}" Click="Button_Click_2"  />
         </StackPanel>
 
         <!-- Основная сетка с двумя колонками: меню и содержимое -->
@@ -232,8 +233,8 @@
                 Width="200"
                 VerticalAlignment="Top"
                 Margin="10">
-                    <Button Content="Пользователи" Click="User_Click" Style="{StaticResource MenuButtonStyle}" />
-                    <Button Content="Команда" Click="Sotrud_Click" Style="{StaticResource MenuButtonStyle}" />
+                    <Button Content="Сотрудники" Click="User_Click" Style="{StaticResource MenuButtonStyle}" />
+                    <Button Content="Тех. Специалисты" Click="Sotrud_Click" Style="{StaticResource MenuButtonStyle}" />
                     <Button Content="Коментарии" Click="btnComment_Click" Style="{StaticResource MenuButtonStyle}" />
                     <Button Content="Импорт" Click="Button_Click" Style="{StaticResource MenuButtonStyle}" />
                     <Button Content="Выход" Click="Exit" Style="{StaticResource MenuButtonStyle}" />

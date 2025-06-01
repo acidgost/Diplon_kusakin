@@ -85,7 +85,7 @@
             <Grid>
                 <!-- Верхняя панель -->
                 <Grid VerticalAlignment="Top" Height="50" Background="Transparent">
-                    <Label Content="Сотрудники"
+                    <Label Content="Тех. Специалист"
                            FontSize="24"
                            HorizontalAlignment="Left"
                            VerticalAlignment="Center"
@@ -168,7 +168,7 @@
 
                 <!-- Кнопка добавления -->
                 <Grid Height="40" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,10,10">
-                    <Button Content="Добавить сотрудника"
+                    <Button Content="Добавить специалиста"
                             FontSize="16"
                             FontWeight="Bold"
                             Background="{StaticResource BackgroundBrush}"

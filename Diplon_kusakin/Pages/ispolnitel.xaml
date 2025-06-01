@@ -48,7 +48,7 @@
                 <!-- Верхняя панель -->
                 <Grid Height="50" VerticalAlignment="Top">
                     <Label x:Name="name"
-                           Content="Исполнитель"
+                           Content="Тех Специалист"
                            FontSize="24"
                            FontWeight="Bold"
                            VerticalAlignment="Center"

@@ -298,9 +298,52 @@ namespace Diplon_kusakin.Pages
             }
         }
 
+        public ObservableCollection<Request> GetArchivedRequests()
+        {
+            ObservableCollection<Request> archivedRequests = new ObservableCollection<Request>();
+            try
+            {
+                string query = $"SELECT * FROM Requests WHERE Status = 'готово'";
+                using (MySqlDataReader reader = Connection.SqlConnection(query, new List<MySqlParameter>()))
+                {
+                    while (reader.Read())
+                    {
+                        Request request = new Request
+                        {
+                            Id = reader.GetInt32("id"),
+                            Registration_Date = reader.GetString("Registration_Date"),
+                            Equipment_Type = reader.GetString("Equipment_Type"),
+                            Equipment = reader.GetString("Equipment"),
+                            Kabinet = reader.GetString("Kabinet"),
+                            ProblemDescription = reader.GetString("ProblemDescription"),
+                            Contact_Information = reader.GetString("Contact_Information"),
+                            Status = reader.GetString("Status"),
+                            Assignee = reader.GetString("Assignee"),
+                            Full_name = reader.GetString("Full_name"),
+                            Priority = reader.GetString("Priority"),
+                            DateEnd = reader.GetString("DateEnd")
+                        };
+                        archivedRequests.Add(request);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ошибка при загрузке архива заявок: " + ex.Message);
+            }
+
+            return archivedRequests;
+        }
+
+
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             NavigationService?.Navigate(new Pages.Dashboard(mainWindow, currentUser));
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            mainWindow.OpenPages(new Pages.Archive(mainWindow, currentUser));
         }
     }
 }
