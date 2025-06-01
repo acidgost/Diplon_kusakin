@@ -38,7 +38,7 @@ namespace Diplon_kusakin.Pages
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            mainWindow.OpenPages(new Pages.Archive(mainWindow, currentUser))
+            
         }
     }
 }
